@@ -1,7 +1,3 @@
-
-
-
-
 # Pytania na rozmowy kwalifikacyjne
 
 Zamieszczam tutaj pytania z którymi się spotkałem na rozmowach kwalifikacyjnych i na które odpowiedzi warto znać. 
@@ -12,7 +8,7 @@ W przyszłości będą tu też odpowiedzi.
 - Co to jest JVM?
 - Co to jest Garbage Collector? 
 - Czym różni się stos od sterty? 
-  - Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
+- Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
 - Porównaj typy float/double/BigDecimal w JAVIE
   - Omów problemy związane z przeliczeniami wartości korzystając z ww. typów
 - Czym są Unboxing i autoboxing w JAVIE?
@@ -76,10 +72,6 @@ new String("test") == new String("test") // I taki też zwraca false?
 - Napisz algorytm liczący silnię (bez rekurencji)
 - Napisz algorytm liczący kolejne elementy ciągu Fibonacciego
 - Sprawdź czy liczba jest potęgą 2
-- 
-
-
-
 
 ## SELENIUM i AUTOMATYZACJA
 - Omów jakie znasz rodzaje selektorów. 
@@ -134,35 +126,58 @@ new String("test") == new String("test") // I taki też zwraca false?
 - Omów protokół HTTPS: 
   - Po co sięgo stosuje?
   - Na czym polega komunikacja? Krok po kroku.
+  - Klucze publiczne i prywatne
+  - Szyfrowanie asymetryczne i symetryczne
+    - Kiedy jakie jest wykorzystywane
+	- Jakie są wady i zalety każdego z nich
   
 - Z czego się składa adres IP?
 - Co to jest maska podsieci
 - Jak znając maskę podsieci i IP wyliczyć ilość dostępnych adresów w sieci?
-- Ile jest możliwych adresów przy masce 0.0.0.0
+- Ile jest dostępnych adresów przy masce 0.0.0.0
 - Omów ogólnie czego dotyczy model OSI
-#### HTTP
+
+#### HTTP / REST
 - Czym jest SOAP?
 - Czym jest REST?
 - Jakie znasz metody HTTP?
+  - Do czego służy każda z nich?
 - Jak wygląda request i response HTTP?
-- Jaki jest główny podział statusów odpowiedzi HTTP? 
-- Jakie znasz statusy odpowiedzi?
+- Jaki jest główny podział statusów odpowiedzi HTTP?
+  - Co oznaczają kody 1xx, 2xx, 3xx, 4xx, 5xx
+- Jakie znasz statusy odpowiedzi? Wymień kilka (np. 200, 201, 301, 400, 404, 500)
+- Czym chararakteryzują się metody idempotentne? Które są idempotentne, a które nie?
 - Jakiej metody HTTP użyć gdy: 
   - Pobierasz zasób
   - Tworzysz zasób
   - Edytujesz cały zasób
   - Edytujesz jedno pole w zasobie
-- Czym są Headery i do czego się stosuje? 
+- Czym są Headery i do czego się je stosuje? 
 - Jakie znasz Headery? 
-- Omów różnicę pomiędzy autoryzacją, a autentykacją
-- Co to jest Oauth2
+- Co to są ciasteczka?
+
+
+## BEZPIECZEŃSTWO
+- Jakie znasz rodzaje ataków na serwisy WWW?
+- Co oznacza skrót CORS?
+  - Czy Kod JS na stronie może wywołać zapytanie do innej domeny?
+  - Czym jest Same Origin policy?
+- Czym się różni autoryzacja od autentykacji?
+- Co to jest OAuth2
+- Czy znasz OWASP?
+- Na czym polegają ataki i jak się przed nimi zabezpieczać:
+  - SQL Injection
+  - XSS
+  - XSRF
+  - SSRF
+  - XXE
 
 ## Inne
 - Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
 - Omów działanie komend pod linuxem: 
   - kill -9 0
   - ls
-  - touch
+  - touch xd.dd
   - cd ..
   - cd .
   - cat
@@ -170,6 +185,9 @@ new String("test") == new String("test") // I taki też zwraca false?
   - tail
   - ps aux | grep node
 - Jak wypisać 10 ostatnich linijek z pliku testowego?
+- Jak wypisać pierwszych 10 linijek z pliku?
+- Jak wyszukać w pierwszych 100 linijkach pliku xd.dd linii zawierających słowo ```lol``` ?
+
 
 ## BAZY DANYCH
 - Omów pojęcia: 
