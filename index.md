@@ -4,6 +4,12 @@ Zamieszczam tutaj pytania z którymi się spotkałem na rozmowach kwalifikacyjny
 W przyszłości będą tu też odpowiedzi. 
 
 # 1. PYTANIA
+### JAVA 8
+- Wyrażenie Lambda
+- Functional interfaces https://www.geeksforgeeks.org/functional-interfaces-java/
+- Streams API https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/
+- Optional https://www.baeldung.com/java-optional
+
 ## JAVA
 - Co to jest JVM?
 - Co to jest Garbage Collector? 
@@ -85,11 +91,30 @@ new String("test") == new String("test") // I taki też zwraca false?
   - .img:first-child
   - .img > div  
 
-## JavaScript
-- Omów dziedziczenie w JS
-- Omów czym są prototypy i do czego się je stosuje? 
+## JavaScript ES6+, ESNext
+- Omów dziedziczenie przez prototypy w JS
 - na co wskazuje **this** ?
-- czym się różni **let** od **var** (ES6+)?
+### Arrays
+- 
+
+### Promisy, callbacki
+- Co pojawi się na konsoli po wykonaniu tego:
+```
+setTimeout(0, () => console.log("First"))
+console.log("Second");
+```
+- Co to są obiecanki (Promises) w JavaScript? 
+  - Po co je stosować (zamiast callbacków)?
+- Jak działa API **async-await** w JavaScript? 
+  - Jaki ma związek z **Promises**
+  - Co zwraca funkcja ze słowem kluczowym **async**? 
+  - Co robi operator **await** wewnątrz funkcji?
+- Po co kompilować kod JS?
+  - Jakie znasz kompilatory?
+- Co to jest Event Loop?
+  - Czy JavaScript jest asynchroniczny?
+  - Czy JavaScript jest jednowątkowy?
+  - Co się dzieje w Event Loop kiedy wykonamy ```setTimeout(0, () => console.log("First"))``` ?
 - [ZADANIE] Za pomocą konsoli przeglądarki mając otwartą stronę wyników wyszukiwania z Google wypisz wszystkie znalezione linki.
 
 ## Teoria testowania
@@ -129,8 +154,7 @@ new String("test") == new String("test") // I taki też zwraca false?
   - Klucze publiczne i prywatne
   - Szyfrowanie asymetryczne i symetryczne
     - Kiedy jakie jest wykorzystywane
-	- Jakie są wady i zalety każdego z nich
-  
+    - Jakie są wady i zalety każdego z nich
 - Z czego się składa adres IP?
 - Co to jest maska podsieci
 - Jak znając maskę podsieci i IP wyliczyć ilość dostępnych adresów w sieci?
@@ -284,9 +308,5 @@ new String("test") == new String("test") // I taki też zwraca false?
 
 ## LINKI:
 http://toolsqa.com - Baza wiedzy o selenium
-
-
-
-# 3. ODPOWIEDZI NA PYTANIA
 
 
