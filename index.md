@@ -232,6 +232,20 @@ console.log("Second");
 
 
 # 2. OPRACOWANIA
+
+##Frameworki JAVA: 
+- Wiremock http://wiremock.org/ - Mockowanie API.
+- Mockito https://site.mockito.org/ - Mockowanie Unit tests
+- TestNG, JUnit5 - uruchamianie testów
+- Cucumber - uruchamianie testów BDD
+- RESTAssured - Testowanie API REST, fluent interface.
+
+## LINKI:
+http://toolsqa.com - Baza wiedzy o selenium
+
+
+
+
 ## CLEAN CODE W PIGUŁCE
 1. Znaczące nazwy:
   - nazwy funkcji/zmiennych/klas przedstawiające intencję
@@ -305,8 +319,5 @@ console.log("Second");
 **Clustered index** - 
 **Non clustered index** - 
 **Kiedy używać indeksów, a kiedy nie powinno się** - 
-
-## LINKI:
-http://toolsqa.com - Baza wiedzy o selenium
 
 
