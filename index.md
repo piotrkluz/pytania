@@ -33,17 +33,56 @@ new String("test") == new String("test") // I taki też zwraca false?
 
 //WTF? 
 ```
+
+<details><summary>Template</summary>
+  ...
+</details>
+
+
 #### KOLEKCJE
-- Omów kolekcje w JAVIE. Podstawowe interfejsy i ich implementacje
-- Czym różni się ArrayList od LinkedList?
-- Czym różni sięHashSet od TreeSet? 
-- Wyjaśnij jak działa HashMap.
-- po co implementować metody **hashCode()** i **equals()** ?
+<details><summary>Omów kolekcje w JAVIE. Podstawowe interfejsy i ich implementacje</summary>
+  ##### Podstawowy podział:
+              Collection                Map
+         /     /    \      \            |
+        /      /      \     \           |
+     Set    List    Queue  Dequeue   SortedMap
+     /
+    /
+ SortedSet 
+  
+  
+  ##### Implementacje: 
+  https://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png
+</details>
+<details><summary>Czym różni się ArrayList od LinkedList?</summary>
+  Sposobem implementacji. ArayList przechowuje elementy w Arrayu (bardzo szybkie operacje wstawiania na końcu / początku i losowy dostęp, LinkedList w każdym elemencie posiada wskaźnik do następnego elementu, bardzo szybkie wstawianie na dowolną pozycję, powolny losowy dostęp do danych)
+</details>
+<details><summary>Czym różni się HashSet od TreeSet? </summary>
+  HashSet - nie gwarantuje kolejności wstawiania
+  TreeSet - gwarantuje kolejność wstawiania
+</details>
+<details><summary>Wyjaśnij jak działa HashMap.</summary>
+  ...
+</details>
+<details><summary>po co implementować metody **hashCode()** i **equals()** ?</summary>
+  - Metody te służą do porównywania obiektów - a co za tym idzie ułatwiają i przyspieszają działania m.in. na kolekcjach.
+</details>
+
+
 #### WYJĄTKI
-- Omów podstawowe klasy wyjątków i ich hierarchię
-- Czym różni się **Exception** od **Error**? 
-- Czym różni się **RuntimeException** od **IOException**? 
-- Co to są wyjątki "checked" i "unchecked" ?
+<details><summary>Omów podstawowe klasy wyjątków i ich hierarchię</summary>
+  ...
+</details>
+<details><summary>Czym różni się **Exception** od **Error**? </summary>
+  ...
+</details>
+<details><summary>Czym różni się **RuntimeException** od **IOException**? </summary>
+  ...
+</details>
+<details><summary>Co to są wyjątki "checked" i "unchecked" ?</summary>
+  ...
+</details>
+
 #### TYPY GENERYCZNE
 - Co to są typy generyczne? Omów je
 #### WĄTKI
@@ -53,7 +92,6 @@ new String("test") == new String("test") // I taki też zwraca false?
 - Jak synchronizować wątki?
 - omów słowo kluczowe **synchronized**
 - Jak działają metody **wait()**, **notify()**, **notifyAll()**
-  
   
 ## OOP
 - Co to jest polimorfizm?
