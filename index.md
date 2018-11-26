@@ -357,5 +357,9 @@ http://toolsqa.com - Baza wiedzy o selenium
 **Clustered index** - 
 **Non clustered index** - 
 **Kiedy używać indeksów, a kiedy nie powinno się** - 
-
+<style>
+  details > summary {
+    font-weight: bold;
+}
+</style>
 
