@@ -3,6 +3,9 @@
 Zamieszczam tutaj pytania z którymi się spotkałem na rozmowach kwalifikacyjnych i na które odpowiedzi warto znać. 
 W przyszłości będą tu też odpowiedzi. 
 
+Bardzo dobra lista pytań JS ES6+
+https://www.devkozak.com/pytania-js/
+
 # 1. PYTANIA
 ### JAVA 8
 - Wyrażenie Lambda
