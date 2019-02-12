@@ -114,6 +114,7 @@ new String("test") == new String("test") // I taki też zwraca false?
   
   
 ## ALGORYTMY
+- Problem diamentowy w JAVIE
 - Omów problem pięciu filozofów
 - Omów problem producenta i konsumenta
 - Napisz algorytm liczący silnię (bez rekurencji)
