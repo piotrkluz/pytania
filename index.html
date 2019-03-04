@@ -40,25 +40,20 @@
         }
 
         function removeSpaces() {
-            document.querySelectorAll('pre > code').forEach(el => {
-                let text = el.innerText;
-                //delete empty lines
-                text.replace(/(\n *\n)*/, "\n");
+            document.querySelectorAll('pre > code')
+                .forEach(el => removeSpaces(el));
+        }
 
-                const lines = el.split("\n");
-                //find minimum spaces to cut
-                const spacesNumberToCut = lines.reduce((prev, curr) => {
-                    const spacesNumber = curr.search.search(/ (?=\S)/);
-                    return prev < spacesNumber ? prev : spacesNumber;
-                }, 999);
+        function removeSpaces(element) {
+            const lines = el.innerText.split("\n");
 
+            //Determine regex to cut first spaces by first line.
+            const spacesToCut = lines[0].search(/ (?=\S)/); //find last space
+            const cutRegex = new RegExp(` {0,${spacesToCut}}`);
 
-                //delete empty lines
-                const trimmedLines = lines.map(l => l.replace(
-
-                ))
-
-            });
+            el.innerText = lines.lines
+                .map(l => l.replace(cutRegex, ""))
+                .join("\n");
         }
 
     </script>
@@ -73,11 +68,9 @@
             <h1>JAVA 8 - zasoby zewnętrzne</h1>
             <ul>
                 <li>Wyrażenie Lambda</li>
-                <li>Functional interfaces <a
-                        href="https://www.geeksforgeeks.org/functional-interfaces-java/">https://www.geeksforgeeks.org/functional-interfaces-java/</a>
+                <li>Functional interfaces <a href="https://www.geeksforgeeks.org/functional-interfaces-java/">https://www.geeksforgeeks.org/functional-interfaces-java/</a>
                 </li>
-                <li>Streams API <a
-                        href="https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/">https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/</a>
+                <li>Streams API <a href="https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/">https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/</a>
                 </li>
                 <li>Optional <a href="https://www.baeldung.com/java-optional">https://www.baeldung.com/java-optional</a>
                 </li>
@@ -98,35 +91,79 @@
             </details>
             <details>
                 <summary>Co to jest Garbage Collector?</summary>
-                <p>odpowiedź</p>
+                <p>
+                    KRÓTKO: Garbage Collector (część środowiska JVM) - algorytm, który odpowiada za usuwanie
+                    nieużywanych obiektów z pamięci.
+                    <br><br>
+                    W języku JAVA nie ma funkcji "zwolnienia pamięci" - bezpośrednio z poziomu języka.
+                    Spowodowane jest to faktem, że łatwo tutaj popełnić błąd i doprowadzić do krytycznego błędu systemu
+                    (np. gdy program odniesie się do adresu pamięci, gdzie nie ma nic albo co gorsza są dane innego
+                    programu).
+                    Po to jest Garbage Collector - część środowiska nad którą programista ma tylko pośrednią kontrolę.
+                    Działa on tak, że co jakiś czas podczas działania programu zatrzymuje bieżący wątek i sprawdza,
+                    które obiekty na stercie nie mają żadnej referencji w programie.
+                    Jeśli nie ma referencji - usuwa obiekt zwalniając pamięć.
+                </p>
             </details>
             <details>
                 <summary>Czym różni się stos od sterty?</summary>
-                <p>odpowiedź</p>
+                <p>STOS - na nim przechowywane są typy proste, oraz referencje do obiektów na stercie.
+                    <br>STERTA - obszar pamięci gdzie przechowywane są Obiekty i inne bardziej skomplikowane struktry
+                    danych.
+                </p>
+
             </details>
             <details>
                 <summary>Jakie rzeczy są zapisywane na stercie, a jakie na stosie?</summary>
-                <p>odpowiedź</p>
+                <p>Sterta - obiekty, Stos - referencje do obiektów i typy proste.</p>
             </details>
             <details>
-                <summary>Porównaj typy float/double/BigDecimal w JAVIE</summary>
-                <p>odpowiedź</p>
+                <summary>Porównaj typy float/double/BigDecimal. TYPY W JAVIE</summary>
+                <p>
+                    Ogólnie typy danych: <ul>
+                        <li>Całkowite: byte (8bit) - short (16bit) - int (32bit) - long (64bit)</li>
+                        <li>Zmiennoprzecinkowe: float (32bit) - double (64bit)</li>
+                        <li>boolean (1bit) true-false</li>
+                        <li>char - (8-16bit UTF8)</li>
+                        <li>String</li>
+                        <li>BigDecimal - wielkie liczby zmiennoprzecinkowe.</li>
+                        <li>BigInteger - wielkie liczny całkowite</li>
+                    </ul>
+
+                    Odpowiadając na pytanie: Typy różnią się precyzją (float-double), a klasa BigDecimal jest
+                    dedykowana do obliczeń finansowych.
+                </p>
             </details>
             <details>
                 <summary>Omów problemy związane z przeliczeniami wartości korzystając z ww. typów</summary>
-                <p>odpowiedź</p>
+                <p>Przy float - double będą problemy z zaokrąglaniem. BigDecimal zapewnia nad tym kontrolę.</p>
             </details>
             <details>
                 <summary>Czym są Unboxing i autoboxing w JAVIE?</summary>
-                <p>odpowiedź</p>
+                <p>
+                    Boxing - pakowanie - odpakowanie obiektów np. Integer -> int.
+                    <br>Unboxing - odpakowanie typu obiektowego na odpowiadający mu typ prosty.
+                    <br>Autoboxing - automatyczne opakowywanie obiektów przez kompilator.
+                </p>
             </details>
             <details>
                 <summary>Omów typy: String, StringBuilder.</summary>
-                <p>odpowiedź</p>
+                <p>String - łańcuch znaków. Jest obiektem Immutable (niezmienialnym).
+                    Dlatego aby doawać do siebie wiele String'ów uzywamy klasy StringBuilder ze względu na wydajność.
+                    W przypadku dodawania String'ów zwyczajnie tj. "str1" + "str2" + "str3".
+                    Każda operacja kopiuje poprzedni string. Gdy jest bardzo długi ma to wpływ na wydajność i zajętość
+                    pamięci. W ww. przykładzie jest skopiowany 2 razy.
+                </p>
             </details>
             <details>
                 <summary>Omów jakie znasz klasyfikatory dostępu w JAVIE (są 4)</summary>
-                <p>odpowiedź</p>
+                <p>
+                    Dotyczą pól / klas / metod
+                    <br>public - dostęp publiczny
+                    <br>protected - dostęp tylko z poziomu klas dziedziczących
+                    <br>private - dostęp prywatny
+                    <br>//BRAK// - dostęp z obrębu pakietu (namespace)
+                </p>
             </details>
         </section>
 
@@ -134,19 +171,31 @@
             <h1>JAVA - porównywanie obiektów</h1>
             <details>
                 <summary>Jak porównywane są obiekty w JAVIE, z jakich metod korzystają</summary>
-                <p>odpowiedź</p>
+                <p>
+                    Korzystają z .equals() i hashCode();
+                </p>
             </details>
             <details>
                 <summary>Różnica pomiędzy '==' i .equals()</summary>
-                <p>odpowiedź</p>
+                <p>
+                    '==' - porównuje referencję
+                    <br> obj1.equals(obj2) porównuje zawartość obiektów
+                </p>
             </details>
             <details>
                 <summary>Do czego służy metoda hashCode() ?</summary>
-                <p>odpowiedź</p>
+                <p>Oblicza hashCode obiektu. Jest to liczba int.
+                    Jeśli hashCode się różnią - obiekty nie są takie same
+                    Jeśli hashCode są takie same - obiekty MOGĄ LECZ NIE MUSZĄ być identyczne
+                </p>
             </details>
             <details>
                 <summary>Omów interfejsy Comparable i Comparator.</summary>
-                <p>odpowiedź</p>
+                <p>
+                    Udostępniają metody pozwalające porównać obiekty.
+                    Zwracają liczbę int -1 mniejszy // 0 równy // 1 większy
+                    Comparable - udostępnia metodę obj1.compare(obj2) - Porównuje obiekty.
+                </p>
             </details>
             <details>
                 <summary>Pytanie: Skoro == porównuje referencje a nie wartości, to dlaczego:
@@ -156,7 +205,8 @@
                             new String("test") == new String("test") // I taki też zwraca false?
                     </code></pre>
                 </summary>
-                <p>odpowiedź</p>
+                <p>Kompilator optymalizuje kod podczas kompilacji zapisując jawnie utworzone Stringi w jednym obiekcie.
+                    Stąd pierwszy przykład zwraca true.</p>
             </details>
         </section>
 
@@ -168,8 +218,8 @@
             </details>
             <details>
                 <summary>Czym różni się ArrayList od LinkedList?</summary>
-                <p>Sposobem implementacji. ArayList przechowuje elementy w Arrayu (bardzo szybkie operacje wstawiania na
-                    końcu / początku i losowy dostęp, LinkedList w każdym elemencie posiada wskaźnik do następnego
+                <p>Sposobem implementacji. ArayList przechowuje elementy w Arrayu (bardzo szybkie operacje wstawiania
+                    na końcu / początku i losowy dostęp, LinkedList w każdym elemencie posiada wskaźnik do następnego
                     elementu, bardzo szybkie wstawianie na dowolną pozycję, powolny losowy dostęp do danych)</p>
             </details>
             <details>
@@ -191,19 +241,22 @@
             <h1>JAVA - wyjątki</h1>
             <details>
                 <summary>Omów podstawowe klasy wyjątków i ich hierarchię</summary>
-                <p>odpowiedź</p>
+                <p><img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg"></p>
             </details>
             <details>
                 <summary>Czym różni się **Exception** od **Error**?</summary>
-                <p>odpowiedź</p>
+                <p>Error zwykle nie zależy od programisty.</p>
             </details>
             <details>
                 <summary>Czym różni się **RuntimeException** od **IOException**?</summary>
-                <p>odpowiedź</p>
+                <p>Pierwsze jest unchecked, drugie checked.</p>
             </details>
             <details>
                 <summary>Co to są wyjątki "checked" i "unchecked" ?</summary>
-                <p>odpowiedź</p>
+                <p>checked - wyjątki sprawdzane w trakcie kompilacji. Program się nie skompiluje bez ich obsłużenia lub
+                    zadeklarowania.
+                    <br>Unchecked - nie są sprawdzane w trakcie kompilacji.
+                </p>
             </details>
         </section>
 
@@ -211,7 +264,7 @@
             <h1>JAVA - typy generyczne</h1>
             <details>
                 <summary>Co to są typy generyczne? Omów je</summary>
-                <p>odpowiedź</p>
+                <p><a href="https://www.tutorialspoint.com/java/java_generics.htm">https://www.tutorialspoint.com/java/java_generics.htm</a></p>
             </details>
 
         </section>
@@ -220,19 +273,33 @@
             <h1>JAVA - wątki</h1>
             <details>
                 <summary>Co to są wątki?</summary>
-                <p>odpowiedź</p>
+                <p>Obsługiwane przez system operacyjny.
+                    <br>Reprezentuje zasoby procesora do równoległego wykonywania obliczeń.
+                    <br>Jeden wątek - maks. jeden rdzeń procesora.
+                    <br>Jednocześnie jeden rdzeń może obsługiwać wiele wątków (sytem operacyjny przydziela ułąmek czasu
+                    procesora per każdy wątek)
+                    <br>Wszystkie wątki dzielą jedną pamięć w ramach tego samego procesu. Dlatego są łatwiejsze/szybsze
+                    do utworzenia / zamknięcia.
+                </p>
             </details>
             <details>
                 <summary>Co to są procesy?</summary>
-                <p>odpowiedź</p>
+                <p>Obsługiwane przez system operacyjny.
+                    <br>Każdy proces posiada conajmniej jeden wątek reprezentujący zasoby procesora i mający dostęp do
+                    zasobów procesu.
+                    <br>Proces reprezentuje zasoby procesora, pamięci i innych zasobówo zarezerwowane dla uruchomionej
+                    instancji aplikacji.
+                    <br>Proces może posiadać podprocesy. Każdy podproces ma swoje zasoby. Proces rodzic ma dostęp do
+                    zasobów wszystkich swoich podprocesów.
+                </p>
             </details>
             <details>
                 <summary>Jak utworzyć wątek? Jak go zatrzymać?</summary>
-                <p>odpowiedź</p>
+                <p><a href="https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/">LINK</a></p>
             </details>
             <details>
                 <summary>Jak synchronizować wątki?</summary>
-                <p>odpowiedź</p>
+                <p>https://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/</p>
             </details>
             <details>
                 <summary>omów słowo kluczowe synchronized</summary>
@@ -240,7 +307,11 @@
             </details>
             <details>
                 <summary>Jak działają metody wait(), notify(), notifyAll()</summary>
-                <p>odpowiedź</p>
+                <p>
+                    wait() - zatrzymuje wątek w danym miejscu (celem synchronizacji)
+                    <br>notify() - uruchamia zatrzymany wątek.
+                    <br>notifyAll() - uruchamia wszystkie zatrzymane wątki
+                </p>
             </details>
 
         </section>
@@ -249,33 +320,35 @@
         <h1>OOP</h1>
         <details>
             <summary>Co rozumiesz pod pojęciem polimorfizm?</summary>
-            <p>odpowiedź</p>
+            <p>Możliwość typowania obiektu, który w konsekwencji będzie mógł posiadać różne implementacje.
+                np. List lista;
+                lista = new ArrayList();
+                lista = new LinkedList();
+            </p>
         </details>
         <details>
             <summary>Co to jest dziedziczenie?</summary>
-            <p>odpowiedź</p>
+            <p>Mechanizm przejmowania własności jednej klasy poprzez odziedziczenie i nadpisanie jej pól / metod.</p>
         </details>
         <details>
             <summary>Dziedziczenie vs Kompozycja - czym się różni, kiedy jakie zastosujesz?</summary>
-            <p>odpowiedź</p>
+            <p>Kompozycja - dodanie funkcjonalności do klasy wstawiając do niej pole innej klasy.</p>
         </details>
         <details>
             <summary>Po co stosować enkapsulację?</summary>
-            <p>odpowiedź</p>
-        </details>
-        <details>
-            <summary>Omów jakie znasz klasyfikatory dostępu.</summary>
-            <p>odpowiedź</p>
+            <p>TBD</p>
         </details>
         <details>
             <summary>Interfejs vs klasa abstrakcyjna.</summary>
-            <p>odpowiedź</p>
+            <p>Interfejs umożliwia wielodziedziczenie.
+                <br>Klasa abstrakcyjna stanowi zwykle szablon dla danej klasy obiektów.
+                <br>Interfejs zwykle stanowi kontrakt do zaimplementowania.
+            </p>
         </details>
         <details>
             <summary>Jakie znasz wzorce projektowe?</summary>
             <p>Warto wymienić kilka, które się dobrze zna i stosuje.
-                <br><a
-                    href="https://refactoring.guru/design-patterns/catalog">https://refactoring.guru/design-patterns/catalog</a>
+                <br><a href="https://refactoring.guru/design-patterns/catalog">https://refactoring.guru/design-patterns/catalog</a>
                 - obszerna lista z omówieniem.
                 <h3>PRZYKŁADY</h3>
                 <ul>
@@ -311,8 +384,7 @@
         <details>
             <summary>Omów zasady SOLID</summary>
             <p>5 Zasad utwiających utrzymać <b>czysty kod.</b>
-                <br>Więcej tutaj: <a
-                    href="https://hackernoon.com/solid-principles-made-easy-67b1246bcdf">https://hackernoon.com/solid-principles-made-easy-67b1246bcdf</a>
+                <br>Więcej tutaj: <a href="https://hackernoon.com/solid-principles-made-easy-67b1246bcdf">https://hackernoon.com/solid-principles-made-easy-67b1246bcdf</a>
                 <ul>
                     <li><b>S</b>ingle Responsibility Principle</li> - Każda klasa powinna posiadać dokładnie jedną
                     odpowiedzialność i robić tę jedną rzecz najlepiej jak się da. Nigdy nie powinien istnieć więcej niż
@@ -324,7 +396,8 @@
                     jakiegośkonkretnego typu obiektu (np. Animal), to powinniśmy mieć możliwość użycia tam dowolnego
                     jego podtypu np. Cat, Mouse itp.
                     <li><b>I</b>nterface Segregation Principle</li> - Krótko: Użytkownik nie powinien byćzmuszony do
-                    implementowania metod których nie używa. Lepiej więcej małych niż jeden duży. Dlatego należy tworzyć
+                    implementowania metod których nie używa. Lepiej więcej małych niż jeden duży. Dlatego należy
+                    tworzyć
                     proste i krótkie interfejsy przeznaczone do jednego celu (SRP). Ograniczy to powstawanie
                     niepotzebnych zależności w projekcie.
                     <li><b>D</b>ependency Inversion Principle</li> - Opieraj sięna abstrakcjach, zamiast konkretnych
@@ -338,10 +411,12 @@
         </details>
         <details>
             <summary>Omów zasadę KISS</summary>
-            <p>Keep It Simple, Stupid! Nie buduj armaty na komary głupcze. Jak cośnie jest konieczne to tego ma tam nie
-                być! Jak napisałeś zajebistą funkcję, która okazała się niepotrzebna to zamiast ją zakomentować - USUŃ
-                (Przecieć i tak zostanie w VCS). 80% czasu przy programowaniu to czytanie (nie pisanie) kodu!. Zadbaj,
-                aby było go jak najmniej.</p>
+            <p>Keep It Simple, Stupid! Nie buduj armaty na komary głupcze.
+                <br>KOD POWINIEN BYĆ:
+                <br> - czytelny i zrozumiały (nie buduj hack'ów)
+                <br> - możliwie najkrótszy (wszystkie nieużywane funkcje - OUT )
+                <br> Jak coś nie jest konieczne w kodzie to tego ma tam nie być! 80% czasu przy programowaniu to
+                czytanie (nie pisanie) kodu!. Zadbaj, by było go jak najmniej.</p>
         </details>
     </article>
     <article>
@@ -357,8 +432,7 @@
         <details>
             <summary>Omów problem pięciu filozofów</summary>
             <p>Problem dotyczy ograniczonych zasobów. Np. sprzętowych.
-                Wiki wie lepiej <a
-                    href="https://pl.wikipedia.org/wiki/Problem_ucztuj%C4%85cych_filozof%C3%B3w">https://pl.wikipedia.org/wiki/Problem_ucztuj%C4%85cych_filozof%C3%B3w</a>
+                Wiki wie lepiej <a href="https://pl.wikipedia.org/wiki/Problem_ucztuj%C4%85cych_filozof%C3%B3w">https://pl.wikipedia.org/wiki/Problem_ucztuj%C4%85cych_filozof%C3%B3w</a>
             </p>
         </details>
         <details>
@@ -454,15 +528,15 @@ function silnia(level) {
             <h1>JavaScript / TypeScript ES6+</h1>
             <details>
                 <summary>Czy w JS są klasy?</summary>
-                <p>odpowiedź</p>
+                <p>
+                    Nie. Są obiekty. Dziedziczy się przez prototypy.
+                    W ES6 doszła składnia definicji "klasy", która pod spodem niczym się nie różni od opierania się na
+                    prototypach. </p>
             </details>
             <details>
                 <summary>Co oznacza this w JavaScript?</summary>
-                <p>odpowiedź</p>
-            </details>
-            <details>
-                <summary>Co to jest Event Loop?</summary>
-                <p>odpowiedź</p>
+                <p>this -> Aktualny kontekst wykonania. This jest przypisywany np. podczas tworzenia nowego obiektu
+                    poprzez operator new.</p>
             </details>
             <details>
                 <summary>Co pojawi się na konsoli po wykonaniu takiego kodu:
@@ -471,19 +545,22 @@ function silnia(level) {
                             console.log("Second");
                     </code></pre>
                 </summary>
-                <p>odpowiedź</p>
+                <p>Second
+                    First
+                </p>
             </details>
             <details>
                 <summary>Po co stosować przetwarzania asynchroniczne?</summary>
-                <p>odpowiedź</p>
+                <p>Aby zrobić więcej w mniej :)</p>
             </details>
             <details>
                 <summary>Co to jest callback w JS?</summary>
-                <p>odpowiedź</p>
+                <p>funkcja, przekazywana jako parametr do innej funkcji (która działa asynchronicznie)
+                    Wykonanie callbacku ma sygnalizować funkcji inicjującej wykonaine zadania. </p>
             </details>
             <details>
                 <summary>Co to są Promise'y w JavaScript? Jakie korzyści nam dają w porównaniu do callback'ów?</summary>
-                <p>odpowiedź</p>
+                <p>TBD, dłuższy temat</p>
             </details>
             <details>
                 <summary>Jak działa API async-await w JavaScript?
@@ -493,29 +570,42 @@ function silnia(level) {
                         <li>Co robi operator <b>await</b> wewnątrz funkcji?</li>
                     </ul>
                 </summary>
-                <p>odpowiedź</p>
+                <p>Jest lukrem składniowym na Promises.
+                    <br>Funkcja async zwraca Promise'a, który rozwiązuje się na argument zwracany zfunkcji async.
+                    Krótko mówiąc zwraca obietnicę wykonania funkcji.
+                    <br> await wewnątrz funkcji async rozwiązuje obietnicę innej funkcji asynchronicznej zwracając jej
+                    wartość (czekając wcześniej na jej zakończenie).
+                </p>
             </details>
 
             <details>
                 <summary>Jak uruchomić plik lol.js z bieżącego katalogu?</summary>
-                <p>odpowiedź</p>
+                <p>node ./lol.js</p>
             </details>
             <details>
                 <summary>Po co kompilować kod JS? Jakie znasz kompilatory?</summary>
-                <p>odpowiedź</p>
+                <p>Po co kompilować? By używać nowych funkcji JS - i przekompilowywać kod by był kompatybilny ze
+                    starszymi przeglądarkami. Oraz by używać np. TypeScript'u, który jest kompilowany do JS.
+                    Jakie znasz kompilatory? tsc, babel</p>
             </details>
             <details>
                 <summary>Co to jest Event Loop?
                     <ul>
                         <li>Czy JavaScript jest asynchroniczny?</li>
                         <li>Czy JavaScript jest jednowątkowy?</li>
-                        <li>Co się dzieje w Event Loop kiedy wykonamy
-                            <pre><code>setTimeout(0, () => console.log("lol"))</code></pre> ?</li>
                     </ul>
                 </summary>
-                <p>odpowiedź</p>
+                <p>Kolejka wykonania działań poprzez silnik JavaScript. Dzięki niej możliwe jest działanie
+                        asynchroniczne aplikacji.
+                        Np. po wywołaniu setTimeout(() => console.log("Hello"), 0) dzieją się następujące rzeczy
+                        równolegle:
+                        - Oddzielny wątek z API przeglądarki czeka 0ms, po czym doaje do Event loop funkcję: () =>
+                        console.log("Hello")
+                        - Program kontynuuje swoje działanie do momentu zakończenia aktualnego kontekstu wykonania. (np.
+                        funkcji) (Właściwie, to czeka aż call stack będzie pusty)
+                        - Następna funkcja z Event loop jest wykonywana (w naszym przypadku console.log("Hello"))
+                    </p>
             </details>
-
             <details>
                 <summary>Co zwraca wyrażenie Lambda w JS</summary>
                 <p>Obiekt zwany funkcją.</p>
@@ -525,20 +615,25 @@ function silnia(level) {
                 <p>Wszystko jest obiektem.</p>
             </details>
             <details>
-                <summary>[ZADANIE] Za pomocą konsoli przeglądarki mając otwartą stronę wyników wyszukiwania z Google
-                    wypisz wszystkie znalezione linki.</summary>
-                <p>odpowiedź</p>
+                <summary>[ZADANIE] Za pomocą konsoli przeglądarki mając otwartą stronę wyników wyszukiwania z Google wypisz wszystkie znalezione linki.</summary>
+                <p>Można tak: 
+                        Array.from(document.querySelectorAll(".r > a:first-child"))
+                        .forEach(link => console.log(link.href))
+                </p>
             </details>
             <details>
                 <summary>[ZADANIE] Napisz funkcję sumującą wszystkie elementy w Array.</summary>
-                <p>const sumarr -> arr.reduce((prev, curr) => prev + curr)</p>
+                <p>function sumArr(arr) {
+                    arr.reduce((prev, curr) => prev + curr)
+                }
+                </p>
             </details>
         </article>
         <article>
             <h1>Teoria testowania</h1>
             <details>
                 <summary>Wymień rodzaje dokumentacji w projekcie</summary>
-                <p>odpowiedź</p>
+                <p>TBD</p>
             </details>
             <details>
                 <summary>Co powinien zawierać plan testów?</summary>
