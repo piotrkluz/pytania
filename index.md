@@ -20,13 +20,9 @@ Działa on tak, że co jakiś czas podczas działania programu zatrzymuje bież�
 które obiekty na stercie nie mają żadnej referencji w programie.
 Jeśli nie ma referencji - usuwa obiekt zwalniając pamięć.
 
-#### Czym różni się stos od sterty? 
-- STOS - na nim przechowywane są typy proste, oraz referencje do obiektów na stercie.
-- STERTA - obszar pamięci gdzie przechowywane są Obiekty i inne bardziej skomplikowane struktry
-danych.
-
 #### Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
-Sterta - obiekty, Stos - referencje do obiektów i typy proste.
+- STOS - na nim przechowywane są typy proste, oraz referencje do obiektów na stercie.
+- STERTA - Obiekty i typy złożone
 
 #### Porównaj typy float/double/BigDecimal w JAVIE
 Ogólnie typy danych: 
@@ -38,50 +34,60 @@ Ogólnie typy danych:
 - BigDecimal - wielkie liczby zmiennoprzecinkowe.
 - BigInteger - wielkie liczny całkowite
 
+Odpowiadając na pytanie: **Typy różnią się precyzją (float-double), a klasa BigDecimal jest
+dedykowana do obliczeń finansowych.**
 
-Odpowiadając na pytanie: Typy różnią się precyzją (float-double), a klasa BigDecimal jest
-dedykowana do obliczeń finansowych.
-
-##### Omów problemy związane z przeliczeniami wartości korzystając z ww. typów
+#### Omów problemy związane z przeliczeniami wartości korzystając z ww. typów
 Przy float - double będą problemy z zaokrąglaniem. BigDecimal zapewnia nad tym kontrolę.
 
 #### Czym są Unboxing i autoboxing w JAVIE?
 Boxing - pakowanie - odpakowanie obiektów np. Integer -> int.
 Unboxing - odpakowanie typu obiektowego na odpowiadający mu typ prosty.
 Autoboxing - automatyczne opakowywanie obiektów przez kompilator.
+```java
+Integer autoboxedNumber = 234; //autoboxing
+Integer boxedNumber = Integer.valueOf(123); //boxing
+int unboxedNumber = (int)boxedNumber; //unboxing
+```
 
 #### Omów typy: String, StringBuilder. 
 String - łańcuch znaków. Jest obiektem Immutable (niezmienialnym).
-Dlatego aby doawać do siebie wiele String'ów uzywamy klasy StringBuilder ze względu na wydajność.
-W przypadku dodawania String'ów zwyczajnie tj. "str1" + "str2" + "str3".
-Każda operacja kopiuje poprzedni string. Gdy jest bardzo długi ma to wpływ na wydajność i zajętość
-pamięci. W ww. przykładzie jest skopiowany 2 razy.
+Dlatego aby dodawać do siebie wiele String'ów uzywamy klasy StringBuilder ze względu na wydajność.
+
+Rozważmy przykład ```"str1" + "str2" + "str3"``` 
+Każda operacja kopiuje poprzedni string. W przypadku dużej ich ilości warto skorzystać z klasy ```StringBuilder```, która łączy Stringi dopiero na końcu procesu.
 
 
 #### Omów jakie znasz klasyfikatory dostępu w JAVIE (są 4)
-Dotyczą pól / klas / metod
-- public - dostęp publiczny
-- protected - dostęp tylko z poziomu klas dziedziczących
-- private - dostęp prywatny
-- //BRAK// - dostęp z obrębu pakietu (namespace)
+Dotyczą **pól / klas / metod**:
+- ```public``` - dostęp publiczny
+- ```protected``` - dostęp tylko z poziomu klas dziedziczących
+- ```private``` - dostęp prywatny
+- ```BRAK``` - dostęp z obrębu pakietu (namespace)
 
 #### PORÓWNYWANIE OBIEKTÓW
 #### Jak porównywane są obiekty w JAVIE, z jakich metod korzystają
-Korzystają z .equals() i hashCode();
+Korzystają z ```.equals()``` i ```hashCode()```;
 
-#### Różnica pomiędzy '==' i .equals()
-'==' - porównuje referencję
-- obj1.equals(obj2) porównuje zawartość obiektów
+#### Różnica pomiędzy ```'=='``` i ```.equals()```
+- ```'=='``` - porównuje referencje
+- ```obj1.equals(obj2)``` porównuje zawartość obiektów
 
 #### Do czego służy metoda hashCode() ?
-Oblicza hashCode obiektu. Jest to liczba int.
-Jeśli hashCode się różnią - obiekty nie są takie same
-Jeśli hashCode są takie same - obiekty MOGĄ LECZ NIE MUSZĄ być identyczne
+Oblicza hashCode obiektu. Jest to liczba int. 
+- Jeśli hashCode się różnią - obiekty nie są takie same
+- Jeśli hashCode są takie same - obiekty MOGĄ LECZ NIE MUSZĄ być identyczne
 
 #### Omów interfejsy Comparable i Comparator.
-Udostępniają metody pozwalające porównać obiekty.
-Zwracają liczbę int -1 mniejszy // 0 równy // 1 większy
-Comparable - udostępnia metodę obj1.compare(obj2) - Porównuje obiekty.
+Udostępniają metody ```compare()``` / ```compareTo()``` pozwalające porównać obiekty.
+Metody zwracają typ ```int``` o wartościach: 
+- ```-1```: mniejszy 
+-  ```0```: równy 
+- ```1```: większy
+
+PRZYKŁADY:
+- Interfejs ```Comparable```:  ```obj1.compareTo(obj2)```
+- Interfejs ```Comparator```:  ```comparatorInstance.compare(obj1, obj2)```
 
 #### Pytanie: Skoro == porównuje *referencje* a nie wartości, to dlaczego w poniższym kodzie:
 ```java
@@ -89,10 +95,11 @@ Comparable - udostępnia metodę obj1.compare(obj2) - Porównuje obiekty.
 "test" == new String("test") // A taki kod zwraca false?
 new String("test") == new String("test") // I taki też zwraca false?
 ```
-Kompilator optymalizuje kod podczas kompilacji zapisując jawnie utworzone Stringi w jednym obiekcie. Stąd pierwszy przykład zwraca true.
+Kompilator optymalizuje kod podczas kompilacji zapisując jawnie utworzone Stringi w jednym obiekcie. Wszystkie wystąpienia ```"test"``` w przykłądzie wskazują na ten sam obiekt. Stąd operator ```==``` porównujący referencje w pierwszym przypasku zwraca ```true```.
 
 
 ## KOLEKCJE
+#### Jakie znasz kolekcje w JAVA. Podstawowy podział
 <img src="https://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png"/>
 
 #### Czym różni się ArrayList od LinkedList?
@@ -106,7 +113,6 @@ Sposobem implementacji. ArayList przechowuje elementy w Arrayu (bardzo szybkie o
 
 #### po co implementować metody **hashCode()** i **equals()** ?
 Metody te służą do porównywania obiektów - a co za tym idzie ułatwiają i przyspieszają działania m.in. na kolekcjach.
-  
 
 ## WYJĄTKI
 #### Omów podstawowe klasy wyjątków i ich hierarchię
@@ -122,11 +128,11 @@ Pierwsze jest unchecked, drugie checked.
 - checked - wyjątki sprawdzane w trakcie kompilacji. Program się nie skompiluje bez ich obsłużenia lub zadeklarowania.
 - unchecked - nie są sprawdzane w trakcie kompilacji.
 
-#### TYPY GENERYCZNE
+## TYPY GENERYCZNE
 #### Co to są typy generyczne? Omów je
 https://www.tutorialspoint.com/java/java_generics.htm
 
-#### WĄTKI
+## WĄTKI
 #### Co to są wątki? 
 - Obsługiwane przez system operacyjny.
 - Reprezentuje zasoby procesora do równoległego wykonywania obliczeń.
@@ -240,19 +246,18 @@ function silnia(level) {
 
 ## SELENIUM i AUTOMATYZACJA
 #### Omów jakie znasz rodzaje selektorów. 
-#### Czym się różni XPATH od CSS? Co jest lepsze?
-To zależy. 
+#### Czym się różni XPATH od CSS?
 - CSS - Selektory bardziej zwięzłe, bardziej zrozumiałe dla frontendowców. Nie wszystko da się zrobić w CSS, co da się w XPATH
 - XPATH - daje największe możliwości
 
 #### Kiedy używać jakich selektorów?
 #### Co znajdą poniższe selektory CSS: 
-  ##### div#content
-  ##### .img
-  ##### .img.first
-  ##### .img .first
-  ##### .img:first-child
-  ##### .img > div
+- div#content
+- .img
+- .img.first
+- .img .first
+- .img:first-child
+- .img > div
 
 ## JavaScript / TypeScript ES6+
 #### Czy w JS są klasy
@@ -265,12 +270,13 @@ this -> Aktualny kontekst wykonania. This jest przypisywany np. podczas tworzeni
 
 
 ### Promisy, callbacki
-#### Co pojawi się na konsoli po wykonaniu tego:
+#### Co pojawi się na konsoli po wykonaniu tego: 
 ```javascript
 setTimeout(0, () => console.log("First"))
 console.log("Second");
 ```
 > Second
+>
 > First
 
 #### Co to są obiecanki (Promises) w JavaScript? Po co je stosować (zamiast callbacków)?
@@ -283,11 +289,12 @@ console.log("Second");
 #### Co to jest Event Loop?
 #### Czy JavaScript jest asynchroniczny?
 #### Czy JavaScript jest jednowątkowy?
-#### Co się dzieje w Event Loop kiedy wykonamy taki kod
+#### Co się dzieje w kiedy wykonamy taki kod
 ```javascript 
 setTimeout(0, () => console.log("First"))
 ```
 #### [ZADANIE] Za pomocą konsoli przeglądarki mając otwartą stronę wyników wyszukiwania z Google wypisz wszystkie znalezione linki.
+Jedno z rozwiązań:
 ```javascript
 const elements = Array.from(document.querySelectorAll(".r > a:first-child"))
 elements.forEach(link => console.log(link.href))
@@ -332,7 +339,7 @@ elements.forEach(link => console.log(link.href))
 #### Ile jest dostępnych adresów przy masce 0.0.0.0
 #### Omów ogólnie czego dotyczy model OSI
 
-#### HTTP / REST
+## HTTP / REST
 #### Czym jest SOAP?
 #### Czym jest REST?
 #### Jakie znasz metody HTTP? Do czego służy każda z nich?
@@ -360,21 +367,24 @@ elements.forEach(link => console.log(link.href))
 #### Czy znasz OWASP? Co to jest?
 #### Rozszyfruj skróty i krótko omów ataki: SQL Injection, XSS, XSRF, SSRF, XXE
 
-## Inne
+## BAsh
 #### Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
 #### Omów działanie komend pod linuxem: 
-  ##### kill -9 0
-  ##### ls
-  ##### touch xd.dd
-  ##### cd ..
-  ##### cd .
-  ##### cat
-  ##### head
-  ##### tail
-  ##### ps aux | grep node
+- kill -9 0
+- ls
+- touch xd.dd
+- cd ..
+- cd .
+- cat
+- head
+- tail
+- ps aux | grep node
 #### Jak wypisać 10 ostatnich linijek z pliku testowego?
 #### Jak wypisać pierwszych 10 linijek z pliku?
 #### Jak wyszukać w pierwszych 100 linijkach pliku xd.dd linii zawierających słowo ```lol``` ?
+```bash
+head -100 xd.dd | grep lol
+```
 
 
 ## BAZY DANYCH
@@ -390,13 +400,10 @@ elements.forEach(link => console.log(link.href))
 
 
 ## ZASOBY ZEWNĘTRZNE:
-http://toolsqa.com - Baza wiedzy o selenium
-https://learncodethehardway.org/unix/bash_cheat_sheet.pdf - BASH Cheatsheet
-
-### JAVA 8
-https://www.geeksforgeeks.org/functional-interfaces-java/
-https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/
-https://www.baeldung.com/java-optional
+- http://toolsqa.com - Baza wiedzy o selenium
+- https://learncodethehardway.org/unix/bash_cheat_sheet.pdf - BASH Cheatsheet
+- https://www.geeksforgeeks.org/functional-interfaces-java/ - JAVA Functional interfaces
+- https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/ - JAVA Streams
 
 # CLEAN CODE W PIGUŁCE
 1. Znaczące nazwy:
@@ -418,7 +425,7 @@ https://www.baeldung.com/java-optional
   - TODO
   - komentarze ostrzegające
 - nie komentujmy na siłę
-- nie zostawiajmy za komentowanych fragmentów kodu
+- nie zostawiajmy zakomentowanych fragmentów kodu
 4. Formatowanie:
 - małe pliki (klasy) są lepsze niż duże
 - u góry klas najogólniejsze metody poniżej coraz bardziej szczegółowe
