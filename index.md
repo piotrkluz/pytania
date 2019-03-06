@@ -1,24 +1,24 @@
-# PYTANIA
+# JAVA
 #### Co to jest JVM?
-Java Virtual Machine. Środowisko uruchomieniowe dla języka JAVA, możliwie do zainstalowania różnych systemach operacyjnych (umożliwia działania aplikacji JAVA na większości systemów
-operacyjnych). Interpretuje JAVA Bytecode - język pośredni będący wynikiem kompilacji kodu JAVA.
+Java Virtual Machine. Środowisko uruchomieniowe dla języka JAVA, możliwie do zainstalowania różnych systemach operacyjnych. Interpretuje JAVA Bytecode - język pośredni będący wynikiem kompilacji kodu JAVA.
+Do Bytecode'u można kompilować także inne języki jak Groovy, Scala, Kotlin i uruchamiać je na JVM.
 
 Odpowiedniki dla C#:
 - Bytecode -> MSIL
 - JVM -> CLR
 
-#### Co to jest Garbage Collector?
-KRÓTKO: Garbage Collector (część środowiska JVM) - algorytm, który odpowiada za usuwanie
-nieużywanych obiektów z pamięci.
+Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm1.pdf
 
-W języku JAVA nie ma funkcji "zwolnienia pamięci" - bezpośrednio z poziomu języka.
-Spowodowane jest to faktem, że łatwo tutaj popełnić błąd i doprowadzić do krytycznego błędu systemu
-(np. gdy program odniesie się do adresu pamięci, gdzie nie ma nic albo co gorsza są dane innego
-programu).
-Po to jest Garbage Collector - część środowiska nad którą programista ma tylko pośrednią kontrolę.
-Działa on tak, że co jakiś czas podczas działania programu zatrzymuje bieżący wątek i sprawdza,
+#### Co to jest Garbage Collector?
+KRÓTKO: Garbage Collector (składowa JVM) - algorytm, który odpowiada za zwalnianie pamięci.
+
+W języku JAVA nie ma bezpośredniej możliwości "zwolnienia pamięci" z poziomu języka.
+
+**Garbage Collector** jest algorytmem za to odpowiedzialnym.
+Co jakiś czas podczas działania programu **Garbage Collector** zatrzymuje bieżący wątek i sprawdza,
 które obiekty na stercie nie mają żadnej referencji w programie.
-Jeśli nie ma referencji - usuwa obiekt zwalniając pamięć.
+Jeśli nie mają referencji (znaczy, że nie są już używane) - zostają usuwane z pamięci.
+Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm2.pdf
 
 #### Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
 - STOS - na nim przechowywane są typy proste, oraz referencje do obiektów na stercie.
@@ -41,9 +41,9 @@ dedykowana do obliczeń finansowych.**
 Przy float - double będą problemy z zaokrąglaniem. BigDecimal zapewnia nad tym kontrolę.
 
 #### Czym są Unboxing i autoboxing w JAVIE?
-Boxing - pakowanie - odpakowanie obiektów np. Integer -> int.
-Unboxing - odpakowanie typu obiektowego na odpowiadający mu typ prosty.
-Autoboxing - automatyczne opakowywanie obiektów przez kompilator.
+- Boxing - pakowanie - odpakowanie obiektów np. Integer -> int.
+- Unboxing - odpakowanie typu obiektowego na odpowiadający mu typ prosty.
+- Autoboxing - automatyczne opakowywanie obiektów przez kompilator.
 ```java
 Integer autoboxedNumber = 234; //autoboxing
 Integer boxedNumber = Integer.valueOf(123); //boxing
@@ -51,33 +51,36 @@ int unboxedNumber = (int)boxedNumber; //unboxing
 ```
 
 #### Omów typy: String, StringBuilder. 
-String - łańcuch znaków. Jest obiektem Immutable (niezmienialnym).
-Dlatego aby dodawać do siebie wiele String'ów uzywamy klasy StringBuilder ze względu na wydajność.
+String - łańcuch znaków. Jest obiektem **Immutable** (niezmienialnym), co za tym idzie dodawanie stringów tak naprawdę tworzy nowe obiekty stanowiące wynik.
+Aby dodawać do siebie wiele String'ów używamy klasy StringBuilder ze względu na wydajność.
 
 Rozważmy przykład ```"str1" + "str2" + "str3"``` 
 Każda operacja kopiuje poprzedni string. W przypadku dużej ich ilości warto skorzystać z klasy ```StringBuilder```, która łączy Stringi dopiero na końcu procesu.
-
 
 #### Omów jakie znasz klasyfikatory dostępu w JAVIE (są 4)
 Dotyczą **pól / klas / metod**:
 - ```public``` - dostęp publiczny
 - ```protected``` - dostęp tylko z poziomu klas dziedziczących
 - ```private``` - dostęp prywatny
-- ```BRAK``` - dostęp z obrębu pakietu (namespace)
+- ```BRAK``` - dostęp z obrębu pakietu
 
-#### PORÓWNYWANIE OBIEKTÓW
-#### Jak porównywane są obiekty w JAVIE, z jakich metod korzystają
-Korzystają z ```.equals()``` i ```hashCode()```;
+## PORÓWNYWANIE OBIEKTÓW
+#### Jak porównywane są obiekty w JAVIE, z jakich metod korzystają. 
+- ```obj1 == obj2``` - porównuje referencje
+- ```boolean result = obj1.equals(obj2)``` porównuje zawartość obiektów
 
-#### Różnica pomiędzy ```'=='``` i ```.equals()```
-- ```'=='``` - porównuje referencje
-- ```obj1.equals(obj2)``` porównuje zawartość obiektów
+Metodę ```.equals()``` należy zaimplementować (albo użyć do tego biblioteki). 
 
 #### Do czego służy metoda hashCode() ?
-Oblicza hashCode obiektu. Jest to liczba int. 
-- Jeśli hashCode się różnią - obiekty nie są takie same
-- Jeśli hashCode są takie same - obiekty MOGĄ LECZ NIE MUSZĄ być identyczne
+Metodę ```int hashCode()``` należy zaimplementować. Zwraca ona liczbę ```int``` specyficzną dla każdego obiektu. 
+Konrakt mówi, że jeśli wartości ```hashCode()``` obiektów są:
+- takie same -> **Obiekty mogą być identyczne**
+- różne -> **Obiekty na pewno się różnią**
 
+Metody ```.equals()``` i ```.hashCode()``` są używane m.in w kolekcjach do wyszukiwania i porównywania obiektów.
+Można je generować przy pomocy IDE lub kompilatora (używając np. ```@Data``` z biblioteki ```Lombok```).
+
+#### Różnica pomiędzy ```'=='``` i ```.equals()```.
 #### Omów interfejsy Comparable i Comparator.
 Udostępniają metody ```compare()``` / ```compareTo()``` pozwalające porównać obiekty.
 Metody zwracają typ ```int``` o wartościach: 
@@ -89,13 +92,13 @@ PRZYKŁADY:
 - Interfejs ```Comparable```:  ```obj1.compareTo(obj2)```
 - Interfejs ```Comparator```:  ```comparatorInstance.compare(obj1, obj2)```
 
-#### Pytanie: Skoro == porównuje *referencje* a nie wartości, to dlaczego w poniższym kodzie:
+#### BONUS: Skoro == porównuje **referencje** a nie wartości, to dlaczego w poniższym kodzie:
 ```java
 "test" == "test" //taki kod zwrca true
 "test" == new String("test") // A taki kod zwraca false?
 new String("test") == new String("test") // I taki też zwraca false?
 ```
-Kompilator optymalizuje kod podczas kompilacji zapisując jawnie utworzone Stringi w jednym obiekcie. Wszystkie wystąpienia ```"test"``` w przykłądzie wskazują na ten sam obiekt. Stąd operator ```==``` porównujący referencje w pierwszym przypasku zwraca ```true```.
+Kompilator optymalizuje kod podczas kompilacji zapisując jawnie utworzone ciągi znaków w jednym obiekcie. Wszystkie wystąpienia ```"test"``` w przykłądzie wskazują na ten sam obiekt. Stąd operator ```==``` porównujący referencje w pierwszym przypadku zwraca ```true```.
 
 
 ## KOLEKCJE
@@ -103,58 +106,72 @@ Kompilator optymalizuje kod podczas kompilacji zapisując jawnie utworzone Strin
 <img src="https://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png"/>
 
 #### Czym różni się ArrayList od LinkedList?
-Sposobem implementacji. ArayList przechowuje elementy w Arrayu (bardzo szybkie operacje wstawiania na końcu / początku i losowy dostęp, LinkedList w każdym elemencie posiada wskaźnik do następnego elementu, bardzo szybkie wstawianie na dowolną pozycję, powolny losowy dostęp do danych)
+Sposobem implementacji. 
+- **ArayList** - przechowuje elementy w Arrayu bardzo szybkie operacje wstawiania na końcu / początku i losowy dostęp
+- **LinkedList** w każdym elemencie posiada wskaźnik do następnego elementu, co umożliwia bardzo szybkie wstawianie na dowolną pozycję lecz powolny losowy dostęp do danych.
 
 #### Czym różni się HashSet od TreeSet? 
-- HashSet - nie gwarantuje kolejności wstawiania
-- TreeSet - gwarantuje kolejność wstawiania
+- HashSet 
+  - nie gwarantuje kolejności wstawiania
+  - może przechowywać obiekty o wartości ```null```
+  - gwarantuje szybkość działania ```O(1)```, gdzie ```TreeSet```, tylko ```log(n)```
   
 #### Wyjaśnij jak działa HashMap.
+```HashMap``` przechowuje dane w postaciach: klucz-wartość. 
+Podczas zapisu ```map.put(key, value)``` implementacja HashMap wywołuje ```.hashCode()``` na kluczu ```key``` i wykorzystując ten hashcode znajduje indeks pod którym zapisany będzie obiekt(```Entry<key, value>```) w wewnętrznym Array'u. Każdy wpis (Entry) przechowuje zarówno klucz jak i wartość. 
 
-#### po co implementować metody **hashCode()** i **equals()** ?
-Metody te służą do porównywania obiektów - a co za tym idzie ułatwiają i przyspieszają działania m.in. na kolekcjach.
+Wiele kluczy może zwrócić ten sam **hashcode** - stąd pod danym indeksem może być wiele zapisanych obiektów. Dana sytuacja nazywa się kolizją. A obiekty w tej sytuacji zapisywane są w strukturze ```LinkedList<Entry>``` w danym *buckecie*.
+
+Podczas pobierania zasobu z ```map.get(key)```, znowu liczony jest hashcode, wybierany bucket. Jeśli nie ma kolizji - zwracany jest obiekt. Jeśli jest kolizja, wyszukiwany jest odpowiedni wpis na liście (korzystając z metody ```.equals()```).
+Zapewnia to osiągnięcie złożoności obliczeniowej przy pobieraniu obiektu: ```O(1)```.
 
 ## WYJĄTKI
 #### Omów podstawowe klasy wyjątków i ich hierarchię
+Podstawowy podział:
 <img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg">
 
 #### Czym różni się **Exception** od **Error**? 
-Error zwykle nie zależy od programisty.
-
-#### Czym różni się **RuntimeException** od **IOException**? 
-Pierwsze jest unchecked, drugie checked.
+- Error zwykle nie zależy od programisty. Sygnalizuje awarię, której programista nie może / nie powinien obsługiwać w kodzie jak: **StackOverflowError**, czy **OutOfMemoryError**. 
+- Exception'y - mogą / powinny być obsługiwane przez programistę.
 
 #### Co to są wyjątki "checked" i "unchecked" ?
 - checked - wyjątki sprawdzane w trakcie kompilacji. Program się nie skompiluje bez ich obsłużenia lub zadeklarowania.
 - unchecked - nie są sprawdzane w trakcie kompilacji.
+
+#### Czym różni się **RuntimeException** od **IOException**? 
+Pierwsze jest unchecked, drugie checked.
 
 ## TYPY GENERYCZNE
 #### Co to są typy generyczne? Omów je
 https://www.tutorialspoint.com/java/java_generics.htm
 
 ## WĄTKI
-#### Co to są wątki? 
-- Obsługiwane przez system operacyjny.
-- Reprezentuje zasoby procesora do równoległego wykonywania obliczeń.
-- Jeden wątek - maks. jeden rdzeń procesora.
-- Jednocześnie jeden rdzeń może obsługiwać wiele wątków (sytem operacyjny przydziela ułąmek czasu
-procesora per każdy wątek)
+#### Co to są wątki? Co to są procesy
+WĄTKI:
+- Są zapewniane przez system operacyjny
+- Są Najmniejszą sekwencją instrukcji możliwą do zarządzania przez ```Scheduler``` systemu operacyjnego.
+- Jeden wątek -> Jeden ciąg instrukcji procesora
+- Są częścią ```Procesu``` w systemie operacyjnym
+- Jeden proces może zawierać wiele wątków wykonywanych równolegle
+- Jednocześnie jeden rdzeń procesora może obsługiwać wiele wątków, lecz nie w tym samym czasie (sytem operacyjny przydziela ułamek czasu
+procesora na każdy z nich).
 - Wszystkie wątki dzielą jedną pamięć w ramach tego samego procesu. Dlatego są łatwiejsze/szybsze
-do utworzenia / zamknięcia.
+do utworzenia / zamknięcia, niż procesy.
 
-#### Co to są procesy? 
-Obsługiwane przez system operacyjny.
-- Każdy proces posiada conajmniej jeden wątek reprezentujący zasoby procesora i mający dostęp do
-zasobów procesu.
-- Proces reprezentuje zasoby procesora, pamięci i innych zasobówo zarezerwowane dla uruchomionej
-instancji aplikacji.
-- Proces może posiadać podprocesy. Każdy podproces ma swoje zasoby. Proces rodzic ma dostęp do
-zasobów wszystkich swoich podprocesów.
+PROCESY:
+- Zapewniane przez system operacyjny
+- Zawierają conajmniej jeden wątek
+- Zawierają przydzielone zasoby systemowe jak pamięć, uchwyty do plików itp.
+- Mogą zawierać wiele wątków
+- Każdy proces może mieć podprocesy
+  - **proces-rodzic** ma dostęp do wszystkich zasobów swoich podprocesów
+  - **podproces** ma dostęp tylko do swoich zasobów
+- Jeden proces zwykle odpowiada jednej uruchomionej instancji aplikacji.
+
 #### Jak utworzyć wątek? Jak go zatrzymać? 
 https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
-
-#### Jak synchronizować wątki? Omów słowo kluczowe **synchronized**
 https://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+#### Jak synchronizować wątki? Omów słowo kluczowe **synchronized**
 
 #### Jak działają metody **wait()**, **notify()**, **notifyAll()**
 - wait() - zatrzymuje wątek w danym miejscu (celem synchronizacji)
@@ -163,10 +180,10 @@ https://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-lo
   
 ## OOP
 #### Co to jest polimorfizm?
-Mechanizmy umożliwiające programiście używać ogólnych nie zdefiniowanych w momencie pisania metod / klas, których wybór nastąpi później w trakcie kompilacji / uruchomienia programu.  
+Mechanizmy umożliwiające programiście używać ogólnych nie zdefiniowanych w momencie pisania metod / klas, których wybór nastąpi później w trakcie kompilacji / uruchomienia programu.
 
 #### Co to jest dziedziczenie?
-Rozszerzanie funkcjonalności klas poprzez ich rozszerzanie / nadpisanie.
+Dodanie funkcjonalności do klasy poprzez jej **rozszerzanie / nadpisanie**.
 
 #### Po co stosować enkapsulację?
 Aby ograniczyć powiązania w aplikacji do minimum. Ułatwia to późniejsze utrzymanie kodu.
@@ -194,18 +211,49 @@ https://refactoring.guru/design-patterns/catalog
 #### Dziedziczenie vs Kompozycja - czym się różni, kiedy się jakie stosuje? 
 - Dziedziczenie - patrz wyżej.
 - Kompozycja - dodanie funkcjonalności do klasy wstawiając do niej pole innej klasy.
+Np. 
+```java
+class BaseClass {
+    void someMethod() {
+        //do something
+    }
+}
+
+// Dziedziczenie
+class ExtendingClass extends BaseClass {
+    void myMethod() {
+        this.someMethod() // funkcjonalność z BaseClass poprzez dziedziczenie
+    }
+}
+
+// Kompozycja
+class CompositionClass {
+    BaseClass base = new BaseClass();
+
+    void myMethod() {
+        base.someMethod() // funkcjonalność z BaseClass poprzez kompozycje
+    }
+}
+```
+
 #### Interfejs vs klasa abstrakcyjna
-- Interfejs umożliwia wielodziedziczenie.
+- Interfejs umożliwia wielodziedziczenie. (JAVA 8+)
 - Klasa abstrakcyjna stanowi zwykle szablon dla danej klasy obiektów.
 - Interfejs zwykle stanowi kontrakt do zaimplementowania.
 
 #### Omów zasady SOLID
 https://hackernoon.com/solid-principles-made-easy-67b1246bcdf
 - **S**ingle Responsibility Principle - Każda klasa powinna posiadać dokładnie jedną odpowiedzialność i robić tę jedną rzecz najlepiej jak się da. Nigdy nie powinien istnieć więcej niż jeden powód do modyfikacji klasy.
-- **O**pen-Closed Principle - Projekt powinien być otwarty na rozszerzanie i zamknięty na modyfikacje / rozbudowę. Po polsku zamiast modyfikować klasę raczej powinniśmy ją rozszerzać, jednocześnie bazując na abstrakcji zamiast na konkretnych implementacjach.
+
+- **O**pen-Closed Principle - Projekt powinien być otwarty na rozszerzanie i zamknięty na modyfikacje. Zamiast modyfikować klasę raczej powinniśmy ją rozszerzać, jednocześnie bazując na abstrakcji aniżeli konkretnych implementacjach.
+
 - **L**iskov Substitution Principle - Jeśli w danym miejscu programu oczekujemy jakiegośkonkretnego typu obiektu (np. Animal), to powinniśmy mieć możliwość użycia tam dowolnego jego podtypu np. Cat, Mouse itp.
-- **I**nterface Segregation Principle - Krótko: Użytkownik nie powinien byćzmuszony do implementowania metod których nie używa. Lepiej więcej małych niż jeden duży. Dlatego należy tworzyć proste i krótkie interfejsy przeznaczone do jednego celu (SRP). Ograniczy to powstawanie niepotzebnych zależności w projekcie.
-- **D**ependency Inversion Principle - Opieraj sięna abstrakcjach, zamiast konkretnych implementacjach. Moduły wysokopoziomowe NIE POWINNY zależeć od modułów niskopoziomowych. Przekłądając na polski: Interfejsy powinny stać wyżej w hierarchii niż ich konkretne implementacje, które mogą się zmieniać. Ten wzorzec jest powszechnie implementowany przez kontenery Dependency Injection, gdzie w kodzie używa się nazw interfejsów, a za dostarczenie konkretnych instancji obiektów odpowiada centralnie kontener DI.
+
+- **I**nterface Segregation Principle - Krótko: Użytkownik nie powinien być zmuszony do implementowania metod których nie używa. Lepiej więcej małych Interfejsów niż jeden duży. Celem są proste i krótkie interfejsy przeznaczone do jednego celu (SRP). Ograniczy to powstawanie niepotrzebnych zależności w projekcie.
+
+- **D**ependency Inversion Principle - Opieraj się na abstrakcjach, zamiast konkretnych implementacjach. Moduły wysokopoziomowe NIE POWINNY zależeć od modułów niskopoziomowych. 
+
+Interfejsy powinny stać wyżej w hierarchii niż ich konkretne implementacje, które mogą się zmieniać. Ten wzorzec jest powszechnie implementowany przez kontenery ```Dependency Injection```, gdzie w kodzie używa się nazw interfejsów, a za dostarczenie konkretnych instancji obiektów odpowiada centralnie kontener **DI**.
 
 #### Omów KISS
 **Keep It Simple, Stupid!**
@@ -217,22 +265,22 @@ KOD POWINIEN BYĆ:
   
 ## ALGORYTMY
 #### Problem diamentowy w JAVIE
-Problem powstał w JAVA 8 i dotyczy wielodziedziczenia. W końcu interfejcy mogą posiadać domyślne implementacje. Jednocześnie można zaimplementować kilka interfejsów i przypadkowo podziedziczyć kilka implementacji funkcji o tej samej nazwie i parametrach np. boo(). Którą zatem wybrać? W implementacji trzeba zaimplementować metodę z odpowiedniego interfejsu np. Interface1.boo()
+Problem powstał w JAVA 8 i dotyczy wielodziedziczenia. Interfejsy w JAVA8 mogą posiadać domyślne implementacje. Jednocześnie można zaimplementować kilka interfejsów i przypadkowo podziedziczyć kilka implementacji funkcji o tej samej nazwie i parametrach np. boo(). Którą zatem wybrać? Można się odnieść beżpośrednio do konkretnej implementacji: ```Interface1.boo()```
 
 #### Omów problem pięciu filozofów
 #### Omów problem producenta i konsumenta
 #### Napisz algorytm liczący silnię (bez rekurencji)
-```javascript
-function silnia(level) {
+```java
+int silnia(int level) {
     if (level < 0) {
-        throw new Error("Level should not be negative.")
+        throw new RuntimeException("Level should not be negative.")
     }
     
     if (level == 0) {
         return 1;
     }
     
-    let actual = 1;
+    int actual = 1;
     for (i = 2; i <= level; i++) {
         actual = actual * i;
     }
@@ -247,8 +295,9 @@ function silnia(level) {
 ## SELENIUM i AUTOMATYZACJA
 #### Omów jakie znasz rodzaje selektorów. 
 #### Czym się różni XPATH od CSS?
-- CSS - Selektory bardziej zwięzłe, bardziej zrozumiałe dla frontendowców. Nie wszystko da się zrobić w CSS, co da się w XPATH
-- XPATH - daje największe możliwości
+Dwa zupełnie odmienne rodzaje języka służącego do określenia elementów w drzewie DOM / XML.
+- CSS - Selektory bardziej zwięzłe, bardziej zrozumiałe dla frontendowców. Natywna obsługa klas CSS. 
+- XPATH - daje największe możliwości. Umożliwia wyszukiwanie po zawartości tekstowej, poruszanie się po drzewie, itp. 
 
 #### Kiedy używać jakich selektorów?
 #### Co znajdą poniższe selektory CSS: 
@@ -261,46 +310,85 @@ function silnia(level) {
 
 ## JavaScript / TypeScript ES6+
 #### Czy w JS są klasy
-Tak i nie. Są przede wszystkim obiekty. Dziedziczy się przez prototypy.
-W ES6 doszła składnia definicji "klasy", która pod spodem niczym się nie różni od opierania się na prototypach.
+**Nie*** (z jednym zastrzeżeniem)
+Są przede wszystkim obiekty. Dziedziczenie odbywa się przez prototypy.
+W ES6 doszła składnia definicji ```class```, która pod spodem niczym się nie różni od opierania się na prototypach.
 
 #### Omów dziedziczenie przez prototypy w JS
 #### na co wskazuje **this** ?
 this -> Aktualny kontekst wykonania. This jest przypisywany np. podczas tworzenia nowego obiektu poprzez operator new.
 
-
-### Promisy, callbacki
-#### Co pojawi się na konsoli po wykonaniu tego: 
+#### Co pojawi się na konsoli po wykonaniu poniższego kodu: 
 ```javascript
-setTimeout(0, () => console.log("First"))
+setTimeout(0, () => console.log("First"));
 console.log("Second");
+```
+#### I dlaczego?
+ODPOWIEDŹ: 
 ```
 > Second
 >
 > First
-
-#### Co to są obiecanki (Promises) w JavaScript? Po co je stosować (zamiast callbacków)?
-#### Jaki ma związek z **Promises**
-
+```
+W pierwszej linii do Event Loop po czasie ```0ms``` dodawana jest funkcja ```() => console.log("First")```.
+Jednak Zostanie ona wykonana, dopiero po zakończeniu wszystkich instrukcji z aktualnego kontekstu wykonania (tj. wklejonego kodu - drugiej linijki: ```console.log("Second")```).
+#### Jak zmienić kontekst wykonania w JavaScript?
+#### Co to Promise's w JavaScript? Po co je stosować (zamiast callbacków)?
 #### Co zwraca funkcja ze słowem kluczowym **async**? 
-#### Co robi operator **await** wewnątrz funkcji?
+Promise. 
+Np. 
+```javascript
+async function abc() {
+    return "abc"; // Returna Promise<String>
+}
+```
+#### Co robi operator **await** wewnątrz funkcji asynchronicznej?
+Czeka na rozwiązanie ```Promise``` i: 
+- Gdy się powiedzie (```resolved```) zwraca jej wynik
+- Gdy się nie powiedzie (```rejected```) wyrzuca Wyjątek
 
-#### Po co kompilować kod JS? Jakie znasz kompilatory?
+#### Czy znasz TypeScript?
+#### Jakie korzyści przynosi stosowanie TypeScript'u w projekcie?
 #### Co to jest Event Loop?
 #### Czy JavaScript jest asynchroniczny?
 #### Czy JavaScript jest jednowątkowy?
-#### Co się dzieje w kiedy wykonamy taki kod
-```javascript 
-setTimeout(0, () => console.log("First"))
+#### [ZADANIE] Napisz funkcję ```hello(name)``` zwracającą obietnicę (Promise), która po 1 sekundzie rozwiązuje się do wartości ```name```.
 ```
+function hello(name) {
+    return new Promise((resolve, reject) => {
+        return setTimeout(() => resolve(name), 1000);
+    });
+}
+```
+
+Lub korzystając ze składni async: 
+```
+async function hello(name) {
+  await sleep(1000);
+  return name;
+}
+
+//funkcja pomocnicza
+function sleep(ms) {
+  return new Promise(res => setTimeout(res, ms))  
+}
+```
+
+
 #### [ZADANIE] Za pomocą konsoli przeglądarki mając otwartą stronę wyników wyszukiwania z Google wypisz wszystkie znalezione linki.
 Jedno z rozwiązań:
 ```javascript
-const elements = Array.from(document.querySelectorAll(".r > a:first-child"))
-elements.forEach(link => console.log(link.href))
+const links = document.querySelectorAll(".r > a:first-child");
+links.forEach(link => console.log(link.href));
 ```
 
-## Teoria testowania
+# Teoria testowania
+#### Dostajesz błąd zgłoszony na produkcji od użytkownika co z tym robisz? 
+- próbujesz powtórzyć błąd używając scenariuszy testowych
+- sprawdzasz logi
+- kontaktujesz się że zgłaszającym o jeśli jest potrzeba i możliwość
+- sprawdzasz czy błąd występuje na poprzedniej wersji aplikacji
+- No i oczywiście zgłaszasz błąd do deweloperów
 #### Wymień rodzaje dokumentacji w projekcie
 #### Co powinien zawierać plan testów? 
 #### Co powinien zawierać przypadek testowy? 
@@ -320,14 +408,14 @@ elements.forEach(link => console.log(link.href))
 #### Po co stosować mock'owanie podczas testów? 
 
 
-## Zarządzanie projektami
+# Zarządzanie projektami
 #### Co to jest SCRUM? Omów jego założenia.
 #### Omów role w SCRUM'ie (Scrum master, Product owner, zespół, klient)
 #### Omów zdarzenia w SCRUM'ie
 #### Wyjaśnij proces tworzenia oprogramowania w SCRUMIE
 #### Omów metodologię Waterfall
 
-## SIECI
+# SIECI
 #### Omów protokół HTTPS: 
 #### Po co sięgo stosuje?
 #### Na czym polega komunikacja? Krok po kroku.
@@ -339,7 +427,7 @@ elements.forEach(link => console.log(link.href))
 #### Ile jest dostępnych adresów przy masce 0.0.0.0
 #### Omów ogólnie czego dotyczy model OSI
 
-## HTTP / REST
+# HTTP / REST
 #### Czym jest SOAP?
 #### Czym jest REST?
 #### Jakie znasz metody HTTP? Do czego służy każda z nich?
@@ -357,7 +445,7 @@ elements.forEach(link => console.log(link.href))
 #### Co to są ciasteczka? Do czego się je stosuje?
 
 
-## BEZPIECZEŃSTWO
+# BEZPIECZEŃSTWO
 #### Jakie znasz rodzaje ataków na serwisy WWW?
 #### Co oznacza skrót CORS?
 #### Czy Kod JS na stronie może wywołać zapytanie do innej domeny?
@@ -367,7 +455,7 @@ elements.forEach(link => console.log(link.href))
 #### Czy znasz OWASP? Co to jest?
 #### Rozszyfruj skróty i krótko omów ataki: SQL Injection, XSS, XSRF, SSRF, XXE
 
-## BAsh
+# Bash
 #### Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
 #### Omów działanie komend pod linuxem: 
 - kill -9 0
@@ -468,4 +556,3 @@ head -100 xd.dd | grep lol
   - prywatne zmienne instancyjne
   - publiczne metody
   - prywatne metody
-
