@@ -1,19 +1,14 @@
-# JAVA
+# PYTANIA
+## JAVA
 #### Co to jest JVM?
-Java Virtual Machine. Środowisko uruchomieniowe dla języka JAVA, możliwie do zainstalowania różnych systemach operacyjnych. Interpretuje JAVA Bytecode - język pośredni będący wynikiem kompilacji kodu JAVA.
-Do Bytecode'u można kompilować także inne języki jak Groovy, Scala, Kotlin i uruchamiać je na JVM.
-
-Odpowiedniki dla C#:
-- Bytecode -> MSIL
-- JVM -> CLR
+Java Virtual Machine. Środowisko uruchomieniowe dla języka JAVA. Interpretuje JAVA Bytecode - język pośredni będący wynikiem kompilacji kodu JAVA.
 
 Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm1.pdf
 
 #### Co to jest Garbage Collector?
-KRÓTKO: Garbage Collector (składowa JVM) - algorytm, który odpowiada za zwalnianie pamięci.
+KRÓTKO: Garbage Collector składowa JVM odpowiadająca za zwalnianie nieużywanej pamięci.
 
 W języku JAVA nie ma bezpośredniej możliwości "zwolnienia pamięci" z poziomu języka.
-
 **Garbage Collector** jest algorytmem za to odpowiedzialnym.
 Co jakiś czas podczas działania programu **Garbage Collector** zatrzymuje bieżący wątek i sprawdza,
 które obiekty na stercie nie mają żadnej referencji w programie.
@@ -21,48 +16,67 @@ Jeśli nie mają referencji (znaczy, że nie są już używane) - zostają usuwa
 Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm2.pdf
 
 #### Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
-- STOS - na nim przechowywane są typy proste, oraz referencje do obiektów na stercie.
+- STOS - typy proste, wskaźniki do obiektów, wskaźniki powrotu z funkcji.
 - STERTA - Obiekty i typy złożone
 
-#### Porównaj typy float/double/BigDecimal w JAVIE
-Ogólnie typy danych: 
-- Całkowite: byte (8bit) - short (16bit) - int (32bit) - long (64bit)
-- Zmiennoprzecinkowe: float (32bit) - double (64bit)
-- boolean (1bit) true-false
-- char - (8-16bit UTF8)
-- String
-- BigDecimal - wielkie liczby zmiennoprzecinkowe.
-- BigInteger - wielkie liczny całkowite
+#### Jakie znasz typy w JAVIE
+**TYPY PROSTE**
+| typ     | wielkość | opis                        |
+|---------|----------|-----------------------------|
+| boolean | 1 bit    | wartość logiczna            |
+| byte    | 8 bit    | liczba całkowita ze znakiem |
+| short   | 16 bit   | liczba całkowita ze znakiem |
+| int     | 32 bit   | liczba całkowita ze znakiem |
+| long    | 64 bit   | liczba całkowita ze znakiem |
+| float   | 32 bit   | liczba zmiennoprzecinkowa   |
+| double  | 64 bit   | liczba zmiennoprzecinkowa   |
+| char    | 16 bit   | litera                      |
 
-Odpowiadając na pytanie: **Typy różnią się precyzją (float-double), a klasa BigDecimal jest
-dedykowana do obliczeń finansowych.**
-
-#### Omów problemy związane z przeliczeniami wartości korzystając z ww. typów
-Przy float - double będą problemy z zaokrąglaniem. BigDecimal zapewnia nad tym kontrolę.
-
+#### Omów typy BigDecimal / BigInteger. Po co się je stosuje?
 #### Czym są Unboxing i autoboxing w JAVIE?
-- Boxing - pakowanie - odpakowanie obiektów np. Integer -> int.
-- Unboxing - odpakowanie typu obiektowego na odpowiadający mu typ prosty.
-- Autoboxing - automatyczne opakowywanie obiektów przez kompilator.
+Każdy typ prosty ma swój odpowiednik jako typ obiektowy w JAVIE, np. ```int => Integer```.
+
+- **Boxing** - pakowanie obiektu do typu obiektowego
 ```java
-Integer autoboxedNumber = 234; //autoboxing
-Integer boxedNumber = Integer.valueOf(123); //boxing
-int unboxedNumber = (int)boxedNumber; //unboxing
+int someInteger = 1234;
+Integer boxedInteger = Integer.valueOf(someInteger);
+```
+- **Autoboxing** - Automatyczne opakowanie typu przez kompilator:
+```java
+int someInteger = 1234;
+Integer boxedInteger = someInteger;
+```
+- **Unboxing** - Odpakowanie typu obiektowego
+```java
+Integer boxedInteger = Integer.valueOf(someInteger);
+int integer = (int)boxedInteger;
 ```
 
 #### Omów typy: String, StringBuilder. 
 String - łańcuch znaków. Jest obiektem **Immutable** (niezmienialnym), co za tym idzie dodawanie stringów tak naprawdę tworzy nowe obiekty stanowiące wynik.
 Aby dodawać do siebie wiele String'ów używamy klasy StringBuilder ze względu na wydajność.
 
-Rozważmy przykład ```"str1" + "str2" + "str3"``` 
-Każda operacja kopiuje poprzedni string. W przypadku dużej ich ilości warto skorzystać z klasy ```StringBuilder```, która łączy Stringi dopiero na końcu procesu.
+Rozważmy przykład: 
+```"str1" + "str2" + "str3" + ... + "str1000"```. 
+Każda operacja kopiuje poprzedni string. W przypadku dużej ich ilości warto skorzystać z klasy ```StringBuilder```, która łączy stringi dopiero na końcu procesu.
+
+#### Czym charakteryzują się obiekty Immutable? 
+Nie zmieniają swojego stanu po utworzeniu. W celu zmienienia go, tworzy się nowy na jego podstawie.
+Przykład: klasa String, DataTime
+
+**ZALETY**: 
+- Po utworzeniu obiektu możemy być pewni, że nie zmieni on swojego stanu. Możemy np. przekazać go innej metodzie bez obaw. 
+- Każda zmiana obiektu Immutable powoduje utworzenie nowego obiektu. 
+- Dzięki tym cechom są bezpieczniejsze w programowaniu wielowątkowym, kiedy wiele wątków może na raz utworzonym obiekcie pracować jednocześnie. 
 
 #### Omów jakie znasz klasyfikatory dostępu w JAVIE (są 4)
 Dotyczą **pól / klas / metod**:
-- ```public``` - dostęp publiczny
-- ```protected``` - dostęp tylko z poziomu klas dziedziczących
-- ```private``` - dostęp prywatny
-- ```BRAK``` - dostęp z obrębu pakietu
+| kalsyfikator            | opis                                       |
+|-------------------------|--------------------------------------------|
+| public                  | dostęp publiczny                           |
+| protected               | dostęp tylko z poziomu klas dziedziczących |
+| private                 | dostęp tylko z tej samej klasy             |
+| <BRAK>                  | dostęp z obrębu pakietu                    |
 
 ## PORÓWNYWANIE OBIEKTÓW
 #### Jak porównywane są obiekty w JAVIE, z jakich metod korzystają. 
@@ -72,7 +86,9 @@ Dotyczą **pól / klas / metod**:
 Metodę ```.equals()``` należy zaimplementować (albo użyć do tego biblioteki). 
 
 #### Do czego służy metoda hashCode() ?
-Metodę ```int hashCode()``` należy zaimplementować. Zwraca ona liczbę ```int``` specyficzną dla każdego obiektu. 
+Metodę ```int hashCode()``` należy zaimplementować.
+
+Zwraca ona liczbę ```int``` specyficzną dla każdego obiektu. 
 Konrakt mówi, że jeśli wartości ```hashCode()``` obiektów są:
 - takie same -> **Obiekty mogą być identyczne**
 - różne -> **Obiekty na pewno się różnią**
@@ -80,7 +96,6 @@ Konrakt mówi, że jeśli wartości ```hashCode()``` obiektów są:
 Metody ```.equals()``` i ```.hashCode()``` są używane m.in w kolekcjach do wyszukiwania i porównywania obiektów.
 Można je generować przy pomocy IDE lub kompilatora (używając np. ```@Data``` z biblioteki ```Lombok```).
 
-#### Różnica pomiędzy ```'=='``` i ```.equals()```.
 #### Omów interfejsy Comparable i Comparator.
 Udostępniają metody ```compare()``` / ```compareTo()``` pozwalające porównać obiekty.
 Metody zwracają typ ```int``` o wartościach: 
@@ -135,20 +150,20 @@ Podstawowy podział:
 - Exception'y - mogą / powinny być obsługiwane przez programistę.
 
 #### Co to są wyjątki "checked" i "unchecked" ?
-- checked - wyjątki sprawdzane w trakcie kompilacji. Program się nie skompiluje bez ich obsłużenia lub zadeklarowania.
-- unchecked - nie są sprawdzane w trakcie kompilacji.
+- **checked** - wyjątki sprawdzane w trakcie kompilacji. Program się nie skompiluje bez ich obsłużenia lub zadeklarowania.
+- **unchecked** - nie są sprawdzane w trakcie kompilacji.
 
 #### Czym różni się **RuntimeException** od **IOException**? 
-Pierwsze jest unchecked, drugie checked.
+Źródłem, pierwsze jest unchecked, drugie checked.
 
 ## TYPY GENERYCZNE
 #### Co to są typy generyczne? Omów je
 https://www.tutorialspoint.com/java/java_generics.htm
 
 ## WĄTKI
-#### Co to są wątki? Co to są procesy
+#### Co to są wątki? Co to są procesy?
 WĄTKI:
-- Są zapewniane przez system operacyjny
+- Zapewniane przez system operacyjny
 - Są Najmniejszą sekwencją instrukcji możliwą do zarządzania przez ```Scheduler``` systemu operacyjnego.
 - Jeden wątek -> Jeden ciąg instrukcji procesora
 - Są częścią ```Procesu``` w systemie operacyjnym
@@ -339,7 +354,7 @@ Promise.
 Np. 
 ```javascript
 async function abc() {
-    return "abc"; // Returna Promise<String>
+    return "abc"; // return Promise<String>
 }
 ```
 #### Co robi operator **await** wewnątrz funkcji asynchronicznej?
@@ -353,7 +368,7 @@ Czeka na rozwiązanie ```Promise``` i:
 #### Czy JavaScript jest asynchroniczny?
 #### Czy JavaScript jest jednowątkowy?
 #### [ZADANIE] Napisz funkcję ```hello(name)``` zwracającą obietnicę (Promise), która po 1 sekundzie rozwiązuje się do wartości ```name```.
-```
+```javascript
 function hello(name) {
     return new Promise((resolve, reject) => {
         return setTimeout(() => resolve(name), 1000);
@@ -362,7 +377,7 @@ function hello(name) {
 ```
 
 Lub korzystając ze składni async: 
-```
+```javascript
 async function hello(name) {
   await sleep(1000);
   return name;
@@ -411,7 +426,7 @@ links.forEach(link => console.log(link.href));
 # Zarządzanie projektami
 #### Co to jest SCRUM? Omów jego założenia.
 #### Omów role w SCRUM'ie (Scrum master, Product owner, zespół, klient)
-#### Omów zdarzenia w SCRUM'ie
+#### Wymień i omów zdarzenia w SCRUM'ie
 #### Wyjaśnij proces tworzenia oprogramowania w SCRUMIE
 #### Omów metodologię Waterfall
 
@@ -476,6 +491,22 @@ head -100 xd.dd | grep lol
 
 
 ## BAZY DANYCH
+#### Jak działa LEFT JOIN? 
+#### Co zwróci funkcja max z kolumny tekstowej? 
+#### Jak zsumować płace wg. działów. Masz tablicę z listą pracowników z wynagrodzeniami i przypisanym działem.
+TL DR; Trzeba zrobić Group BY po kolumnie z działami.
+
+#### [ORACLE DB] Jak policzyć ilość wierszy zwracanych przez zapytanie?
+- Standardowo ```count(*)```, ale można szybciej: 
+- ```count(1);``` działa zdecydowanie szybciej, bo nie wyciąga wiersza za każdym razem
+
+#### JOIN vs FULL JOIN 
+- JOIN - sortuje wyniki, żeby usunąć duplikaty
+- FULL JOIN (lub INNER JOIN) - nie sortuje i jest szybszy (do zweryfikowania)
+#### Jak można wyciągnąć tylko niektóre wyniki po GROUP BY ?\
+- Po GROUP BY trzeba uzyc HAVING (a nie WHERE !)
+
+
 #### Co to jest Primary key
 #### Omów Unique index
 #### Czym się różnią Clustered Index i Non Clustered index
@@ -493,7 +524,7 @@ head -100 xd.dd | grep lol
 - https://www.geeksforgeeks.org/functional-interfaces-java/ - JAVA Functional interfaces
 - https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/ - JAVA Streams
 
-# CLEAN CODE W PIGUŁCE
+#### CLEAN CODE W PIGUŁCE
 1. Znaczące nazwy:
 - nazwy funkcji/zmiennych/klas przedstawiające intencję
 - unikanie dezinformacji
