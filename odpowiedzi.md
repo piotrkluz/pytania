@@ -1,5 +1,5 @@
 # PYTANIA
-## JAVA
+## JAVA 
 #### Co to jest JVM?
 Java Virtual Machine. Środowisko uruchomieniowe dla języka JAVA. Interpretuje JAVA Bytecode - język pośredni będący wynikiem kompilacji kodu JAVA.
 
