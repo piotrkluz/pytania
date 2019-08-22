@@ -9,7 +9,7 @@ https://github.com/piotrkluz/pytania/blob/master/index.md
 **UWAGA !** Odpowiedzi służą bardziej do przypomnienia materiału, niż nauki od podstaw.
 https://github.com/piotrkluz/pytania/blob/master/odpowiedzi.md
 
-## Książki do nauki, które polecam
+## Polecane książki do nauki
 - Java. Podstawy. Cay S. Horstmann
 - Java. Techniki zaawansowane. Cay S. Horstmann
 - Czysty kod. Podręcznik dobrego programisty - Robert C. Martin - **Must have!**
