@@ -21,6 +21,7 @@ Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm2.pdf
 
 #### Jakie znasz typy w JAVIE
 **TYPY PROSTE**
+
 | typ     | wielkość | opis                        |
 | ------- | -------- | --------------------------- |
 | boolean | 1 bit    | wartość logiczna            |
@@ -56,7 +57,7 @@ int integer = (int)boxedInteger;
 String - łańcuch znaków. Jest obiektem **Immutable** (niezmienialnym), co za tym idzie dodawanie stringów tak naprawdę tworzy nowe obiekty stanowiące wynik.
 Aby dodawać do siebie wiele String'ów używamy klasy StringBuilder ze względu na wydajność.
 
-Rozważmy przykład: 
+Rozważmy przykład:
 ```"str1" + "str2" + "str3" + ... + "str1000"```. 
 Każda operacja kopiuje poprzedni string. W przypadku dużej ich ilości warto skorzystać z klasy ```StringBuilder```, która łączy stringi dopiero na końcu procesu.
 
@@ -72,7 +73,7 @@ Przykład: klasa String, DataTime
 #### Omów jakie znasz klasyfikatory dostępu w JAVIE (są 4)
 Dotyczą **pól / klas / metod**:
 
-| kalsyfikator            | opis                                       |
+| klasyfikator            | opis                                       |
 | ----------------------- | ------------------------------------------ |
 | public                  | dostęp publiczny                           |
 | protected               | dostęp tylko z poziomu klas dziedziczących |
@@ -163,6 +164,7 @@ https://www.tutorialspoint.com/java/java_generics.htm
 
 ## WĄTKI
 #### Co to są wątki? Co to są procesy?
+
 WĄTKI:
 - Zapewniane przez system operacyjny
 - Są Najmniejszą sekwencją instrukcji możliwą do zarządzania przez ```Scheduler``` systemu operacyjnego.
@@ -187,6 +189,7 @@ PROCESY:
 #### Jak utworzyć wątek? Jak go zatrzymać? 
 https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
 https://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+
 #### Jak synchronizować wątki? Omów słowo kluczowe **synchronized**
 
 #### Jak działają metody **wait()**, **notify()**, **notifyAll()**
@@ -205,7 +208,7 @@ Dodanie funkcjonalności do klasy poprzez jej **rozszerzanie / nadpisanie**.
 Aby ograniczyć powiązania w aplikacji do minimum. Ułatwia to późniejsze utrzymanie kodu.
 
 #### Omów znane Tobie wzorce projektowe i omów je
-https://refactoring.guru/design-patterns/catalog
+Tu jest wszystko: https://refactoring.guru/design-patterns/catalog
 
 **PRZYKŁADY:**
 - KREACYJNE (creational)
@@ -225,8 +228,8 @@ https://refactoring.guru/design-patterns/catalog
   - Strategy
 
 #### Dziedziczenie vs Kompozycja - czym się różni, kiedy się jakie stosuje? 
-- Dziedziczenie - patrz wyżej.
 - Kompozycja - dodanie funkcjonalności do klasy wstawiając do niej pole innej klasy.
+- Dziedziczenie - dodanie funkcjonalności do klasy poprzez skopiowanie i nadpisanie jej metod/pól
 Np. 
 ```java
 class BaseClass {
@@ -275,9 +278,9 @@ Interfejsy powinny stać wyżej w hierarchii niż ich konkretne implementacje, k
 **Keep It Simple, Stupid!**
 KOD POWINIEN BYĆ:
 - czytelny i zrozumiały (nie buduj hack'ów)
-- możliwie najkrótszy (wszystkie nieużywane funkcje - OUT )
-- Jak coś nie jest konieczne w kodzie to tego ma tam nie być! 80% czasu przy programowaniu to czytanie (nie pisanie) kodu!. Zadbaj, by było go jak najmniej.
-  
+- możliwie najkrótszy (wszystkie nieużywane funkcje - do wyrzucenia )
+- Jak coś nie jest konieczne w kodzie to tego ma tam nie być! 80% czasu przy programowaniu to czytanie (nie pisanie) kodu. Zadbaj, by było go jak najmniej.
+
   
 ## ALGORYTMY
 #### Problem diamentowy w JAVIE
@@ -285,7 +288,7 @@ Problem powstał w JAVA 8 i dotyczy wielodziedziczenia. Interfejsy w JAVA8 mogą
 
 #### Omów problem pięciu filozofów
 #### Omów problem producenta i konsumenta
-#### Napisz algorytm liczący silnię (bez rekurencji)
+#### [ZADANIE] Napisz algorytm liczący silnię (bez rekurencji)
 ```java
 int silnia(int level) {
     if (level < 0) {
@@ -296,26 +299,58 @@ int silnia(int level) {
         return 1;
     }
     
-    int actual = 1;
+    int currentValue = 1;
     for (i = 2; i <= level; i++) {
-        actual = actual * i;
+        currentValue = currentValue * i;
     }
     
-    return actual;
+    return currentValue;
 }
 ```
 
-#### Napisz algorytm liczący kolejne elementy ciągu Fibonacciego
+#### [ZADANIE] Napisz algorytm liczący n-ty element ciągu fibonacciego (bez rekurencji). (wartość elementu to suma dwóch poprzednich, gdzie: fib(0) = 1, fib(1) = 1, fib(2) = 1, fib(3) = 2, fib(4) = 3, ...
+```javaScript
+function fib(n) {
+    if (n < 0) throw "argument should be 0 or higher, actual is " + n
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+
+    let prevPrevValue = 0, prevValue = 1, currentValue
+    for (let i = 2; i <= n; i++) {
+        currentValue = prevPrevValue + prevValue
+
+        prevPrevValue = prevValue
+        prevValue = currentValue
+    }
+    
+    return currentValue
+}
+```
+
 #### Sprawdź czy liczba jest potęgą 2
+```javascript
+function isPowerOf2(n) {
+    for (i = 1; i<=n; i *=2) {
+        if (n === i) return true
+    }
+
+	return false
+}
+```
 
 ## SELENIUM i AUTOMATYZACJA
 #### Omów jakie znasz rodzaje selektorów. 
+Selenium udostępnia 8 rodzai, przy czym wszystkie można zastąpić albo CSS lub XPATH.
+
 #### Czym się różni XPATH od CSS?
 Dwa zupełnie odmienne rodzaje języka służącego do określenia elementów w drzewie DOM / XML.
-- CSS - Selektory bardziej zwięzłe, bardziej zrozumiałe dla frontendowców. Natywna obsługa klas CSS. 
+- CSS - Selektory bardziej zwięzłe, bardziej zrozumiałe dla frontendowców. Natywna obsługa klas CSS.
+
 - XPATH - daje największe możliwości. Umożliwia wyszukiwanie po zawartości tekstowej, poruszanie się po drzewie, itp. 
 
 #### Kiedy używać jakich selektorów?
+Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS zwykle jest bardziej przejrzysty.
+
 #### Co znajdą poniższe selektory CSS: 
 - div#content
 - .img
@@ -323,6 +358,20 @@ Dwa zupełnie odmienne rodzaje języka służącego do określenia elementów w 
 - .img .first
 - .img:first-child
 - .img > div
+
+
+#### Co znajdą poniższe selektory XPATH: 
+- //*[@type='hidden']
+- //div[0]
+- //div[3]
+- //div[div]
+- //div//a
+- //div/a
+- //div/a/../..//div[name='lol']
+- //div/a[contains(.,'loltext')]/..
+- //div[@name='lol'][@id='lolId']
+- //div[div]
+- //div[a[@id='lolId']]
 
 ## JavaScript / TypeScript ES6+
 #### Czy w JS są klasy
@@ -346,12 +395,14 @@ ODPOWIEDŹ:
 >
 > First
 ```
-W pierwszej linii do Event Loop po czasie ```0ms``` dodawana jest funkcja ```() => console.log("First")```.
+W pierwszej linii wywołujemy funkcję setTimeout, która triggeruje dodanie do Event Loop funkcji po czasie ```0ms```. Dodawana jest funkcja ```() => console.log("First")``` na koniec event loop'a.
 Jednak Zostanie ona wykonana, dopiero po zakończeniu wszystkich instrukcji z aktualnego kontekstu wykonania (tj. wklejonego kodu - drugiej linijki: ```console.log("Second")```).
-#### Jak zmienić kontekst wykonania w JavaScript?
+#### Jak zmienić this dla obiektu w JavaScript?
+Można użyć funkcji ```bind()```
 #### Co to Promise's w JavaScript? Po co je stosować (zamiast callbacków)?
+API ułatwiające zarządzanie asynchronicznym kodem. Zmniejsza poziom skomplikowania kodu w porównaniu do używania callback'ów. 
 #### Co zwraca funkcja ze słowem kluczowym **async**? 
-Promise. 
+Zwraca Promise'a - obietnicę zwrócenia wyniku. 
 Np. 
 ```javascript
 async function abc() {
@@ -365,9 +416,17 @@ Czeka na rozwiązanie ```Promise``` i:
 
 #### Czy znasz TypeScript?
 #### Jakie korzyści przynosi stosowanie TypeScript'u w projekcie?
+Typowanie, a dzięki temu:
+- podpowiadanie składni
+-mniejsze prawdopodobieństwo błędów dzięki kompilacji
+- zwiększa czystość kodu
+- wymusza stosowanie typów i dzięki temu zmniejsza prawdopodobieństwo rzutowania / konwersji typów tam gdzie o nie jest pożądane / zamierzone.
 #### Co to jest Event Loop?
 #### Czy JavaScript jest asynchroniczny?
+Tak
 #### Czy JavaScript jest jednowątkowy?
+Tak, z zastrzeżeniem, że korzysta z API środowiska(np. przeglądarki), które działają w innych wątkach i procesach np WEB API's timing API, fetch API itp.
+
 #### [ZADANIE] Napisz funkcję ```hello(name)``` zwracającą obietnicę (Promise), która po 1 sekundzie rozwiązuje się do wartości ```name```.
 ```javascript
 function hello(name) {
@@ -398,6 +457,13 @@ const links = document.querySelectorAll(".r > a:first-child");
 links.forEach(link => console.log(link.href));
 ```
 
+#### [ZADANIE] Masz dwie wieże naprzeciw siebie, każda ma 3 okna po 1 na każdym piętrze - czyli razem 6 okien naprzeciw siebie. Można między dowolnymi oknami przerzucić 2 liny - w zależności od kombinacji mogą się przecinać albo nie.
+Napisz logikę / zamodeluj problem odpowiadające na pytanie kiedy liny się przetną, a kiedy nie. 
+- Na wejściu masz informacje o tym, jak są zawieszone liny, na wyjściu odpowiedz czy się przecinają. 
+- Zamodeluj to używając klasy / klas.
+- zaimplementuj metodę mówiącą czy liny się przecinają zwracającą `true` lub `false`.
+
+
 # Teoria testowania
 #### Dostajesz błąd zgłoszony na produkcji od użytkownika co z tym robisz? 
 - próbujesz powtórzyć błąd używając scenariuszy testowych
@@ -406,10 +472,11 @@ links.forEach(link => console.log(link.href));
 - sprawdzasz czy błąd występuje na poprzedniej wersji aplikacji
 - No i oczywiście zgłaszasz błąd do deweloperów
 #### Wymień rodzaje dokumentacji w projekcie
-#### Co powinien zawierać plan testów? 
+#### Co powinien zawierać Test plan? 
 #### Co powinien zawierać przypadek testowy? 
 #### Jak tworzyć przypadki testowe?
 #### Jak tworzyć przypadki testowe, kiedy nie ma zdefiniowanych wymagań? 
+#### Omów cykl życia błędu
 #### Co to są wymagania funkcjonalne? 
 #### Co to są wymagania niefunkcjonelne (podaj przykłady)? 
 #### Wymień rodzaje testów: 
@@ -447,15 +514,21 @@ links.forEach(link => console.log(link.href));
 #### Czym jest SOAP?
 #### Czym jest REST?
 #### Jakie znasz metody HTTP? Do czego służy każda z nich?
+- `GET` - pobiera zasób
+- `HEAD` - sprawdza, czy zasób istnieje (zwraca to samo co GET, tylko bez response body)
+- `POST` - tworzy nowy zasób
+- `PUT` - Edytuje cały zasób
+- `PATCH` - Modyfikuje część zasobu
+- `DELETE` - Usuwa zasób
+- `OPTIONS` - Zwraca listę dostępnych metod HTTP dla danego zasobu 
+- `CONNECT`
+- `TRACE`
+
 #### Jak wygląda request i response HTTP?
 #### Jaki jest główny podział statusów odpowiedzi HTTP?
 #### Co oznaczają kody odpowiedzi 1xx, 2xx, 3xx, 4xx, 5xx
 #### Co oznacza kod: 200, 201, 400, 404
 #### Czym chararakteryzują się metody idempotentne? Które są idempotentne, a które nie?
-#### Jakiej metody HTTP użyć gdy pobierasz zasób
-#### Jakiej metody HTTP użyć gdy tworzysz zasób
-#### Jakiej metody HTTP użyć gdy edytujesz cały zasób
-#### Jakiej metody HTTP użyć gdy edytujesz jedno pole w zasobie
 #### Czym są Headery i do czego się je stosuje? 
 #### Jakie znasz Headery? Podaj przykłady.
 #### Co to są ciasteczka? Do czego się je stosuje?
