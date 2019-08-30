@@ -345,11 +345,13 @@ Selenium udostępnia 8 rodzai, przy czym wszystkie można zastąpić albo CSS lu
 #### Czym się różni XPATH od CSS?
 Dwa zupełnie odmienne rodzaje języka służącego do określenia elementów w drzewie DOM / XML.
 - CSS - Selektory bardziej zwięzłe, bardziej zrozumiałe dla frontendowców. Natywna obsługa klas CSS.
-
 - XPATH - daje największe możliwości. Umożliwia wyszukiwanie po zawartości tekstowej, poruszanie się po drzewie, itp. 
 
+#### Który jest szybszy i dlaczego? 
+Szybszy jest CSS, ponieważ nie wczytuje człego drzewa DOM podczas działania.
+
 #### Kiedy używać jakich selektorów?
-Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS zwykle jest bardziej przejrzysty.
+Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS będzie szybszy i bardziej przejrzysty
 
 #### Co znajdą poniższe selektory CSS: 
 - div#content
@@ -513,6 +515,20 @@ Napisz logikę / zamodeluj problem odpowiadające na pytanie kiedy liny się prz
 # HTTP / REST
 #### Czym jest SOAP?
 #### Czym jest REST?
+Styl architektury dla Usług webowych (Web Services) opierający się na wykorzystaniu protokołu HTTP do przesyłania wiadomości.
+Metoda HTTP definiuje akcję, a kody odpowiedzi rezultat. 
+Cechy systemu **RESTfull**
+- Architektura klient-serwer
+- Bezstanowość
+- Cacheability
+- Layered system - Ustanowienie warstwy proxy pomiędzy klientem, a serwerem nie niesie za sobą konieczności ich modyfikacji (jest transparentne). Można np. użyć Load balancera.
+- Jednolity interfejs:
+  - Resource identification in requests - każdy zasób ma swój unikalny URI
+  - Resource manipulation through representations - jeśli klient ma informacje o obiekcie, są one wystarczające do jego usunięcia / modyfikacji
+  - Self-descriptive messages - wiadomości powinny zawierać wystarczającą ilość metadanych i danych do ich poprawnego zrozumienia np. MIME type. Wiadomości zawierają informacje o ich *"cacheowalności"*
+  - Hypermedia as the engine of application state (HATEOAS) - ustandaryzowane linki do zasobów https://restfulapi.net/hateoas/ 
+
+
 #### Jakie znasz metody HTTP? Do czego służy każda z nich?
 - `GET` - pobiera zasób
 - `HEAD` - sprawdza, czy zasób istnieje (zwraca to samo co GET, tylko bez response body)
@@ -527,22 +543,39 @@ Napisz logikę / zamodeluj problem odpowiadające na pytanie kiedy liny się prz
 #### Jak wygląda request i response HTTP?
 #### Jaki jest główny podział statusów odpowiedzi HTTP?
 #### Co oznaczają kody odpowiedzi 1xx, 2xx, 3xx, 4xx, 5xx
+https://www.restapitutorial.com/httpstatuscodes.html
+- 1xx - informacyjne
+- 2xx - sukces
+- 3xx - przekierowanie
+- 4xx - błąd klienta
+- 5xx - błąd serwera
 #### Co oznacza kod: 200, 201, 400, 404
 #### Czym chararakteryzują się metody idempotentne? Które są idempotentne, a które nie?
-#### Czym są Headery i do czego się je stosuje? 
+- Drugie i kolejne ich wywołanie nie zmienia stanu systemu. Są to: GET, HEAD, PUT, DELETE, OPTIONS
+#### Czym charakteryzują się metody bezpieczne
+- Nie zmieniają stanu systemu: np. GET, HEAD, OPTIONS
+#### Czym są Headery i do czego się je stosuje?
+- Zawierają metadane, np. info o stanie ssji (ciastka), cacheowalność, Content type, autentykacja, 
 #### Jakie znasz Headery? Podaj przykłady.
 #### Co to są ciasteczka? Do czego się je stosuje?
 
 
 # BEZPIECZEŃSTWO
 #### Jakie znasz rodzaje ataków na serwisy WWW?
+SQL Injection, XSS, XSRF, SSRF, XXE
 #### Co oznacza skrót CORS?
 #### Czy Kod JS na stronie może wywołać zapytanie do innej domeny?
 #### Co to jest Same Origin policy?
 #### Czym się różni autoryzacja od autentykacji?
+- Autoryzacja - Stwierdzenie że użytkownike ma dostęp do zasobu.
+- Autentykacja - stwierdzenie kim jest użytkownik (jest krokiem autoryzacji)
 #### Co to jest OAuth2
+Standard delegacji autoryzacji
 #### Czy znasz OWASP? Co to jest?
+
 #### Rozszyfruj skróty i krótko omów ataki: SQL Injection, XSS, XSRF, SSRF, XXE
+
+
 
 # Bash
 #### Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
