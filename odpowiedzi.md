@@ -369,11 +369,17 @@ Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS będzie szybszy i bardz
 - //div[div]
 - //div//a
 - //div/a
+- //div/a[contains(text(), 'lol')]
+- //div/a[contains(., 'lol')]
 - //div/a/../..//div[name='lol']
 - //div/a[contains(.,'loltext')]/..
 - //div[@name='lol'][@id='lolId']
-- //div[div]
 - //div[a[@id='lolId']]
+
+#### [ZADANIE] Masz slider w postaci licznika samochodowego w postaci półokręgu. Możesz przesuwać wskazówkę za pomocą "wajchy" po tym półokręgu myszką. Pod spodem jest licznik 0-100%, który wskazuje jak ustawiłeś wskazówkę(0% wskazówka z lewej, 50% wskazówka do góry, 100% wskazówka z prawej).
+- Jak sprawdzić czy to działa używając Selenium ? 
+- Napisz komponent, który enkapsuluje działania na tym sliderze.
+- Masz do dyspozycji funkcję **dragAndDrop(x, y)**, gdzie x i y to współrzędne z układu w lewym górnym rogu ekranu.
 
 ## JavaScript / TypeScript ES6+
 #### Czy w JS są klasy
