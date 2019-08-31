@@ -360,6 +360,7 @@ Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS będzie szybszy i bardz
 - .img .first
 - .img:first-child
 - .img > div
+- .img[lol='xd']
 
 
 #### Co znajdą poniższe selektory XPATH: 
@@ -376,10 +377,10 @@ Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS będzie szybszy i bardz
 - //div[@name='lol'][@id='lolId']
 - //div[a[@id='lolId']]
 
-#### [ZADANIE] Masz slider w postaci licznika samochodowego w postaci półokręgu. Możesz przesuwać wskazówkę za pomocą "wajchy" po tym półokręgu myszką. Pod spodem jest licznik 0-100%, który wskazuje jak ustawiłeś wskazówkę(0% wskazówka z lewej, 50% wskazówka do góry, 100% wskazówka z prawej).
+#### [ZADANIE] Masz slider w postaci licznika samochodowego w kształcie półokręgu. Możesz przesuwać wskazówkę za pomocą "wajchy" po tym półokręgu myszką. Pod spodem jest licznik 0-100%, który wskazuje jak ustawiłeś wskazówkę(0% wskazówka z lewej, 50% wskazówka do góry, 100% wskazówka z prawej).
 - Jak sprawdzić czy to działa używając Selenium ? 
 - Napisz komponent, który enkapsuluje działania na tym sliderze.
-- Masz do dyspozycji funkcję **dragAndDrop(x, y)**, gdzie x i y to współrzędne z układu w lewym górnym rogu ekranu.
+- Masz do dyspozycji funkcję **dragAndDrop(x, y)**, gdzie x i y to współrzędne z układu zaczynającego się w lewym górnym rogu strony. 
 
 ## JavaScript / TypeScript ES6+
 #### Czy w JS są klasy
@@ -403,7 +404,7 @@ ODPOWIEDŹ:
 >
 > First
 ```
-W pierwszej linii wywołujemy funkcję setTimeout, która triggeruje dodanie do Event Loop funkcji po czasie ```0ms```. Dodawana jest funkcja ```() => console.log("First")``` na koniec event loop'a.
+W pierwszej linii wywołujemy funkcję setTimeout, która triggeruje dodanie do Event Loop funkcji ```() => console.log("First")``` po czasie 0 (od razu) na koniec event loop'a.
 Jednak Zostanie ona wykonana, dopiero po zakończeniu wszystkich instrukcji z aktualnego kontekstu wykonania (tj. wklejonego kodu - drugiej linijki: ```console.log("Second")```).
 #### Jak zmienić this dla obiektu w JavaScript?
 Można użyć funkcji ```bind()```
@@ -433,7 +434,10 @@ Typowanie, a dzięki temu:
 #### Czy JavaScript jest asynchroniczny?
 Tak
 #### Czy JavaScript jest jednowątkowy?
-Tak, z zastrzeżeniem, że korzysta z API środowiska(np. przeglądarki), które działają w innych wątkach i procesach np WEB API's timing API, fetch API itp.
+Tak, z zastrzeżeniem, że 
+  - korzysta z API środowiska(np. przeglądarki), które działają w innych wątkach i procesach np WEB API's timing API, fetch API itp.
+  - można w przeglądarce uruchomić service worker, który działa na innym wątku. 
+  - można w Node.JS uruchomić podprocesy (**child_process**), każdy ma swój wątek. 
 
 #### [ZADANIE] Napisz funkcję ```hello(name)``` zwracającą obietnicę (Promise), która po 1 sekundzie rozwiązuje się do wartości ```name```.
 ```javascript
@@ -508,7 +512,7 @@ Napisz logikę / zamodeluj problem odpowiadające na pytanie kiedy liny się prz
 
 # SIECI
 #### Omów protokół HTTPS: 
-#### Po co sięgo stosuje?
+#### Po co się go stosuje?
 #### Na czym polega komunikacja? Krok po kroku.
 #### Klucze publiczne i prywatne
 #### Szyfrowanie asymetryczne i symetryczne
@@ -557,7 +561,7 @@ https://www.restapitutorial.com/httpstatuscodes.html
 - 5xx - błąd serwera
 #### Co oznacza kod: 200, 201, 400, 404
 #### Czym chararakteryzują się metody idempotentne? Które są idempotentne, a które nie?
-- Drugie i kolejne ich wywołanie nie zmienia stanu systemu. Są to: GET, HEAD, PUT, DELETE, OPTIONS
+- Drugie i kolejne ich wywołanie z takimi samymi danymi nie zmienia stanu systemu. Są to: GET, HEAD, PUT, DELETE, OPTIONS
 #### Czym charakteryzują się metody bezpieczne
 - Nie zmieniają stanu systemu: np. GET, HEAD, OPTIONS
 #### Czym są Headery i do czego się je stosuje?
@@ -569,6 +573,7 @@ https://www.restapitutorial.com/httpstatuscodes.html
 # BEZPIECZEŃSTWO
 #### Jakie znasz rodzaje ataków na serwisy WWW?
 SQL Injection, XSS, XSRF, SSRF, XXE
+  - XSS (Cross-site Scripting) wykonanie złośliwego kodu po stronie ofiary za pomocą innej strony (jak spreparowany komentarz na forum) lub wiadomości tekstowej do ofiary. U ofiary dodatkowy kod wykonuje się z dostępem do ciastek, sesji itp. Może modyfikować np. HTML na stronie.
 #### Co oznacza skrót CORS?
 #### Czy Kod JS na stronie może wywołać zapytanie do innej domeny?
 #### Co to jest Same Origin policy?
@@ -581,7 +586,9 @@ Standard delegacji autoryzacji
 
 #### Rozszyfruj skróty i krótko omów ataki: SQL Injection, XSS, XSRF, SSRF, XXE
 
-
+# git
+#### Czym różni się merge od rebase? 
+#### Zasada działania git'a? 
 
 # Bash
 #### Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
@@ -604,6 +611,7 @@ head -100 xd.dd | grep lol
 
 
 ## BAZY DANYCH
+#### Co to jest tablica asocjacyjna? 
 #### Jak działa LEFT JOIN? 
 #### Co zwróci funkcja max z kolumny tekstowej? 
 #### Jak zsumować płace wg. działów. Masz tablicę z listą pracowników z wynagrodzeniami i przypisanym działem.
