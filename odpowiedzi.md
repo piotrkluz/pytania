@@ -227,6 +227,9 @@ Tu jest wszystko: https://refactoring.guru/design-patterns/catalog
   - Iterator
   - Strategy
 
+#### Co daje użycie Buildera vs settery w obiekcie? 
+Niemutowalność, co za tym idzie obiekt thread safe. 
+
 #### Dziedziczenie vs Kompozycja - czym się różni, kiedy się jakie stosuje? 
 - Kompozycja - dodanie funkcjonalności do klasy wstawiając do niej pole innej klasy.
 - Dziedziczenie - dodanie funkcjonalności do klasy poprzez skopiowanie i nadpisanie jej metod/pól
@@ -255,10 +258,15 @@ class CompositionClass {
 }
 ```
 
-#### Interfejs vs klasa abstrakcyjna
+#### Interfejs vs klasa abstrakcyjna czym się różnią? 
+- Interfejs nie jest klasą więc:
+  - nie może zawierać pól
+  - ma wszystkie metody publiczne
+  - nie można go instancjonować
+- Przeznaczeniem: 
+  - interfejs służy do zdefiniowania kontraktu,
+  - klasa abstrakcyjna do zaimplementowania wspólnej funkcjonalności 
 - Interfejs umożliwia wielodziedziczenie. (JAVA 8+)
-- Klasa abstrakcyjna stanowi zwykle szablon dla danej klasy obiektów.
-- Interfejs zwykle stanowi kontrakt do zaimplementowania.
 
 #### Omów zasady SOLID
 https://hackernoon.com/solid-principles-made-easy-67b1246bcdf
@@ -571,18 +579,26 @@ https://www.restapitutorial.com/httpstatuscodes.html
 
 
 # BEZPIECZEŃSTWO
+
+#### Czy znasz OWASP? Co to jest?
 #### Jakie znasz rodzaje ataków na serwisy WWW?
 SQL Injection, XSS, XSRF, SSRF, XXE
-  - XSS (Cross-site Scripting) wykonanie złośliwego kodu po stronie ofiary za pomocą innej strony (jak spreparowany komentarz na forum) lub wiadomości tekstowej do ofiary. U ofiary dodatkowy kod wykonuje się z dostępem do ciastek, sesji itp. Może modyfikować np. HTML na stronie.
-#### Co oznacza skrót CORS?
+  - **XSS (Cross-site Scripting)** wykonanie złośliwego kodu wstrzykując go do ofierze np. tak: ```alert('to jest atak! Powinno wyświetlić alert w Twojej przeglądarce, ale github jakieś tam zabezpieczenia przed XSS ma');```
+  - **XSRF (Cross-site Request Forgery)** Akcja wywołująca u ofiary wykonanie jakiegoś żądania w systemie w którym jest zalogowana. Np. wysłanie ofierze takiego linku na czacie i skłonienie do kliknięcia w niego: ```http://twarzoksiazka.com/usuń_konto```. Atakujący nie widzi odpowiedzi, więc atak nie służy do wykradania danych, a bardziej do skłonienia ofiary do wykonania jakiejś akcji. Jeśli ofiara ma uprawnienia administratora, atak może wyrządzić wiele szkód: np. ```twarzoksiazka.com/usuń_serwer```n
+  - **SSRF** tbd. 
+  - **XXE** tbd. 
+
 #### Czy Kod JS na stronie może wywołać zapytanie do innej domeny?
+Nie, bo **Same Origin Policy**
 #### Co to jest Same Origin policy?
+
+#### Co oznacza skrót CORS?
+
 #### Czym się różni autoryzacja od autentykacji?
 - Autoryzacja - Stwierdzenie że użytkownike ma dostęp do zasobu.
 - Autentykacja - stwierdzenie kim jest użytkownik (jest krokiem autoryzacji)
 #### Co to jest OAuth2
-Standard delegacji autoryzacji
-#### Czy znasz OWASP? Co to jest?
+Standard delegacji autoryzacji. 
 
 #### Rozszyfruj skróty i krótko omów ataki: SQL Injection, XSS, XSRF, SSRF, XXE
 
