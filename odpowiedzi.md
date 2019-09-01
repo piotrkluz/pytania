@@ -53,13 +53,11 @@ Integer boxedInteger = Integer.valueOf(someInteger);
 int integer = (int)boxedInteger;
 ```
 
-#### Omów typy: String, StringBuilder. 
-String - łańcuch znaków. Jest obiektem **Immutable** (niezmienialnym), co za tym idzie dodawanie stringów tak naprawdę tworzy nowe obiekty stanowiące wynik.
-Aby dodawać do siebie wiele String'ów używamy klasy StringBuilder ze względu na wydajność.
+#### Omów typy: String, StringBuilder, StringBuffer
+String - łańcuch znaków. Jest obiektem **Immutable** (niezmienialnym). Dodawanie łańcuchów za każdym razem tworzy nowy obiekt.
+Aby dodawać do siebie wiele String'ów używamy klasy ```StringBuilder``` lub ```StringBuffer``` ze względu na wydajność.
 
-Rozważmy przykład:
-```"str1" + "str2" + "str3" + ... + "str1000"```. 
-Każda operacja kopiuje poprzedni string. W przypadku dużej ich ilości warto skorzystać z klasy ```StringBuilder```, która łączy stringi dopiero na końcu procesu.
+```StringBuffer``` ma wszystkie metody **synchronized**, jest thread safe, natomiast  ```StringBuilder``` jest szybszy.
 
 #### Czym charakteryzują się obiekty Immutable? 
 Nie zmieniają swojego stanu po utworzeniu. W celu zmienienia go, tworzy się nowy na jego podstawie.
@@ -156,35 +154,35 @@ Podstawowy podział:
 - **unchecked** - nie są sprawdzane w trakcie kompilacji.
 
 #### Czym różni się **RuntimeException** od **IOException**? 
-Źródłem, pierwsze jest unchecked, drugie checked.
+1. Źródłem 2. pierwsze jest unchecked, drugie checked.
 
 ## TYPY GENERYCZNE
 #### Co to są typy generyczne? Omów je
 https://www.tutorialspoint.com/java/java_generics.htm
 
+## Functional interfaces
+
+
 ## WĄTKI
 #### Co to są wątki? Co to są procesy?
+PROCESY:
+- System operacyjny udostępnia aplikacjom procesy, które "opakowują" zasoby dostępne dla danej aplikacji, te zasoby to: 
+  - Wątki (ciąg instrukcji procesora)
+  - Pamięć operacyjna
+  - Uchwyty do plików
+  - połączenia HTTP (port), urządzenia wejścia/wyjścia, itp.
+- Proces zawsze posiada conajmniej jeden wątek.
+- Każdy proces może mieć podprocesy
+  - **proces-rodzic** ma dostęp do wszystkich zasobów swoich podprocesów
+  - **podproces** ma dostęp tylko do swoich zasobów
 
 WĄTKI:
-- Zapewniane przez system operacyjny
-- Są Najmniejszą sekwencją instrukcji możliwą do zarządzania przez ```Scheduler``` systemu operacyjnego.
 - Jeden wątek -> Jeden ciąg instrukcji procesora
-- Są częścią ```Procesu``` w systemie operacyjnym
-- Jeden proces może zawierać wiele wątków wykonywanych równolegle
+- Są Najmniejszą sekwencją instrukcji możliwą do zarządzania przez ```Scheduler``` systemu operacyjnego.
 - Jednocześnie jeden rdzeń procesora może obsługiwać wiele wątków, lecz nie w tym samym czasie (sytem operacyjny przydziela ułamek czasu
 procesora na każdy z nich).
 - Wszystkie wątki dzielą jedną pamięć w ramach tego samego procesu. Dlatego są łatwiejsze/szybsze
 do utworzenia / zamknięcia, niż procesy.
-
-PROCESY:
-- Zapewniane przez system operacyjny
-- Zawierają conajmniej jeden wątek
-- Zawierają przydzielone zasoby systemowe jak pamięć, uchwyty do plików itp.
-- Mogą zawierać wiele wątków
-- Każdy proces może mieć podprocesy
-  - **proces-rodzic** ma dostęp do wszystkich zasobów swoich podprocesów
-  - **podproces** ma dostęp tylko do swoich zasobów
-- Jeden proces zwykle odpowiada jednej uruchomionej instancji aplikacji.
 
 #### Jak utworzyć wątek? Jak go zatrzymać? 
 https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
@@ -228,7 +226,7 @@ Tu jest wszystko: https://refactoring.guru/design-patterns/catalog
   - Strategy
 
 #### Co daje użycie Buildera vs settery w obiekcie? 
-Niemutowalność, co za tym idzie obiekt thread safe. 
+Niemutowalność, co za tym idzie obiekt jest thread safe. Dodatkowo przy dużej liczbie podobnych obiektów poprawia wydajność.
 
 #### Dziedziczenie vs Kompozycja - czym się różni, kiedy się jakie stosuje? 
 - Kompozycja - dodanie funkcjonalności do klasy wstawiając do niej pole innej klasy.
@@ -391,12 +389,14 @@ Generalnie - jak nie potrzebujemy ficzerów XPATH to CSS będzie szybszy i bardz
 - Masz do dyspozycji funkcję **dragAndDrop(x, y)**, gdzie x i y to współrzędne z układu zaczynającego się w lewym górnym rogu strony. 
 
 ## JavaScript / TypeScript ES6+
+#### Co to jest Event Loop?
 #### Czy w JS są klasy
 **Nie*** (z jednym zastrzeżeniem)
 Są przede wszystkim obiekty. Dziedziczenie odbywa się przez prototypy.
 W ES6 doszła składnia definicji ```class```, która pod spodem niczym się nie różni od opierania się na prototypach.
 
 #### Omów dziedziczenie przez prototypy w JS
+
 #### na co wskazuje **this** ?
 this -> Aktualny kontekst wykonania. This jest przypisywany np. podczas tworzenia nowego obiektu poprzez operator new.
 
@@ -414,10 +414,13 @@ ODPOWIEDŹ:
 ```
 W pierwszej linii wywołujemy funkcję setTimeout, która triggeruje dodanie do Event Loop funkcji ```() => console.log("First")``` po czasie 0 (od razu) na koniec event loop'a.
 Jednak Zostanie ona wykonana, dopiero po zakończeniu wszystkich instrukcji z aktualnego kontekstu wykonania (tj. wklejonego kodu - drugiej linijki: ```console.log("Second")```).
+
 #### Jak zmienić this dla obiektu w JavaScript?
 Można użyć funkcji ```bind()```
+
 #### Co to Promise's w JavaScript? Po co je stosować (zamiast callbacków)?
 API ułatwiające zarządzanie asynchronicznym kodem. Zmniejsza poziom skomplikowania kodu w porównaniu do używania callback'ów. 
+
 #### Co zwraca funkcja ze słowem kluczowym **async**? 
 Zwraca Promise'a - obietnicę zwrócenia wyniku. 
 Np. 
@@ -432,15 +435,18 @@ Czeka na rozwiązanie ```Promise``` i:
 - Gdy się nie powiedzie (```rejected```) wyrzuca Wyjątek
 
 #### Czy znasz TypeScript?
+
 #### Jakie korzyści przynosi stosowanie TypeScript'u w projekcie?
 Typowanie, a dzięki temu:
 - podpowiadanie składni
 -mniejsze prawdopodobieństwo błędów dzięki kompilacji
 - zwiększa czystość kodu
 - wymusza stosowanie typów i dzięki temu zmniejsza prawdopodobieństwo rzutowania / konwersji typów tam gdzie o nie jest pożądane / zamierzone.
-#### Co to jest Event Loop?
+
+
 #### Czy JavaScript jest asynchroniczny?
 Tak
+
 #### Czy JavaScript jest jednowątkowy?
 Tak, z zastrzeżeniem, że 
   - korzysta z API środowiska(np. przeglądarki), które działają w innych wątkach i procesach np WEB API's timing API, fetch API itp.
@@ -546,7 +552,6 @@ Cechy systemu **RESTfull**
   - Self-descriptive messages - wiadomości powinny zawierać wystarczającą ilość metadanych i danych do ich poprawnego zrozumienia np. MIME type. Wiadomości zawierają informacje o ich *"cacheowalności"*
   - Hypermedia as the engine of application state (HATEOAS) - ustandaryzowane linki do zasobów https://restfulapi.net/hateoas/ 
 
-
 #### Jakie znasz metody HTTP? Do czego służy każda z nich?
 - `GET` - pobiera zasób
 - `HEAD` - sprawdza, czy zasób istnieje (zwraca to samo co GET, tylko bez response body)
@@ -567,7 +572,6 @@ https://www.restapitutorial.com/httpstatuscodes.html
 - 3xx - przekierowanie
 - 4xx - błąd klienta
 - 5xx - błąd serwera
-#### Co oznacza kod: 200, 201, 400, 404
 #### Czym chararakteryzują się metody idempotentne? Które są idempotentne, a które nie?
 - Drugie i kolejne ich wywołanie z takimi samymi danymi nie zmienia stanu systemu. Są to: GET, HEAD, PUT, DELETE, OPTIONS
 #### Czym charakteryzują się metody bezpieczne
@@ -584,15 +588,25 @@ https://www.restapitutorial.com/httpstatuscodes.html
 #### Jakie znasz rodzaje ataków na serwisy WWW?
 SQL Injection, XSS, XSRF, SSRF, XXE
   - **XSS (Cross-site Scripting)** wykonanie złośliwego kodu wstrzykując go do ofierze np. tak: ```alert('to jest atak! Powinno wyświetlić alert w Twojej przeglądarce, ale github jakieś tam zabezpieczenia przed XSS ma');```
-  - **XSRF (Cross-site Request Forgery)** Akcja wywołująca u ofiary wykonanie jakiegoś żądania w systemie w którym jest zalogowana. Np. wysłanie ofierze takiego linku na czacie i skłonienie do kliknięcia w niego: ```http://twarzoksiazka.com/usuń_konto```. Atakujący nie widzi odpowiedzi, więc atak nie służy do wykradania danych, a bardziej do skłonienia ofiary do wykonania jakiejś akcji. Jeśli ofiara ma uprawnienia administratora, atak może wyrządzić wiele szkód: np. ```twarzoksiazka.com/usuń_serwer```n
-  - **SSRF** tbd. 
-  - **XXE** tbd. 
+  - **XSRF (Cross-site Request Forgery)** Akcja wywołująca u ofiary wykonanie jakiegoś żądania w systemie w którym jest zalogowana. Np. wysłanie ofierze takiego linku na czacie i skłonienie do kliknięcia w niego: ```http://fb.com/usuń_konto```. Atakujący nie widzi odpowiedzi, więc atak nie służy do wykradania danych, a bardziej do skłonienia ofiary do wykonania jakiejś (autoryzowanej) akcji. Jeśli ofiara ma uprawnienia administratora, atak może wyrządzić wiele szkód: np. ```fb.com/usuń_serwer```n
+  - **SSRF (Server-Side Request Forgery)** - Skłonienie serwera, do wykonania żądania, niezgodnie z zamysłem programistów. Np. Po wklejeniu linku do Messengera. Serwery wykonują żądania na ten adres i po chwili pojawia się migawka ze strony internetowej. Tutaj atak SSRF mógłby wyglądać tak, że atakujący wkleiłby link: ```/etc/passwd```, a serwer posłusznie wyświetliłby zawartość swoich własnych plików. Albo lokalny port ```0.0.0.0:12345```, oznaczający (skanowanie portów w sieci wewnętrznej). Itp. 
+  - **XXE (XML External Entity)** - atak polegający na tym, że standard XML umożliwia definiowanie zmiennych (encji). 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE myxml [ 
+  <!ENTITY shp SYSTEM "/etc/passwd <tu można wstawić url, lokalizację pliku itp.>">
+] >
+```
+Te encje można zaimportować z oddzielnego pliku i/lub adresu URL. Jeśli prześlemy takiego XML'a, gdzie w encji wprowadzimy zewnętrzny adres, udaje się w ten sposób wywołać atak **SSRF**, albo czytać pliki z serwera.
 
 #### Czy Kod JS na stronie może wywołać zapytanie do innej domeny?
 Nie, bo **Same Origin Policy**
+
 #### Co to jest Same Origin policy?
+Reguła bezpieczeństwa nowoczesnych przeglądarek, uniemożliwiająca kodowi JS wysyłania żądań do adresów z poza 'origin', czyli kombinacji aktualnych: **domeny, portu, protokołu**. Blokuje wiele wektorów ataku typu np. XSS.
 
 #### Co oznacza skrót CORS?
+**CORS (Cross-Origin Resource Sharing)** - zestaw mechanizmów pozwalający ominąć CORS dla niektórych wybranych domen w celu umożliwienia działania naszej aplikacji. Robi się to za pomocą headerów: ```Access-Control```, więcej tu: 
 
 #### Czym się różni autoryzacja od autentykacji?
 - Autoryzacja - Stwierdzenie że użytkownike ma dostęp do zasobu.
@@ -600,16 +614,13 @@ Nie, bo **Same Origin Policy**
 #### Co to jest OAuth2
 Standard delegacji autoryzacji. 
 
-#### Rozszyfruj skróty i krótko omów ataki: SQL Injection, XSS, XSRF, SSRF, XXE
-
-# git
+# Kontrola wersji
 #### Czym różni się merge od rebase? 
-#### Zasada działania git'a? 
+#### Zasada działania GIT'a i czym różni się od SVN? 
 
 # Bash
 #### Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
 #### Omów działanie komend pod linuxem: 
-- kill -9 0
 - ls
 - touch xd.dd
 - cd ..
@@ -628,21 +639,14 @@ head -100 xd.dd | grep lol
 
 ## BAZY DANYCH
 #### Co to jest tablica asocjacyjna? 
-#### Jak działa LEFT JOIN? 
-#### Co zwróci funkcja max z kolumny tekstowej? 
+Przechowuje relacje wiele-do-wielu
+
 #### Jak zsumować płace wg. działów. Masz tablicę z listą pracowników z wynagrodzeniami i przypisanym działem.
 TL DR; Trzeba zrobić Group BY po kolumnie z działami.
 
 #### [ORACLE DB] Jak policzyć ilość wierszy zwracanych przez zapytanie?
 - Standardowo ```count(*)```, ale można szybciej: 
 - ```count(1);``` działa zdecydowanie szybciej, bo nie wyciąga wiersza za każdym razem
-
-#### JOIN vs FULL JOIN 
-- JOIN - sortuje wyniki, żeby usunąć duplikaty
-- FULL JOIN (lub INNER JOIN) - nie sortuje i jest szybszy (do zweryfikowania)
-#### Jak można wyciągnąć tylko niektóre wyniki po GROUP BY ?\
-- Po GROUP BY trzeba uzyc HAVING (a nie WHERE !)
-
 
 #### Co to jest Primary key
 #### Omów Unique index
@@ -660,67 +664,3 @@ TL DR; Trzeba zrobić Group BY po kolumnie z działami.
 - https://learncodethehardway.org/unix/bash_cheat_sheet.pdf - BASH Cheatsheet
 - https://www.geeksforgeeks.org/functional-interfaces-java/ - JAVA Functional interfaces
 - https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/ - JAVA Streams
-
-#### CLEAN CODE W PIGUŁCE
-1. Znaczące nazwy:
-- nazwy funkcji/zmiennych/klas przedstawiające intencję
-- unikanie dezinformacji
-- wymawialne nazwy
-- nazwy łatwe do wyszukania
-2. Funkcje:
-- możliwie jak najkrótsze (max 20 wierszy)
-- najlepiej bez lub jedno argumentowe
-- pojedyncza odpowiedzialność
-- jeden poziom abstrakcji
-- bloki try{} catch{} w osobnej funkcji
-  
-3. Komentarze:
-- Im mniej tym lepiej. (Nazwy funkcji powinny mówić co robi kod)
-- dozwolone komentarze:
-  - komentarz z rodzajem licencji
-  - TODO
-  - komentarze ostrzegające
-- nie komentujmy na siłę
-- nie zostawiajmy zakomentowanych fragmentów kodu
-4. Formatowanie:
-- małe pliki (klasy) są lepsze niż duże
-- u góry klas najogólniejsze metody poniżej coraz bardziej szczegółowe
-- pionowe odstępy między segmentami kodu
-- funkcja wywoływana (zaraz) pod funkcją wywołującą
-- wiersze maksymalnie 120 znakowe
-- spacje wokół operatorów
-- wcięcia poziome oddzielające bloki kodu
-- spójne formatowanie w całym zespole
-5. Obiekty i struktury danych:
-- NIE dodawać na ślepo setterów i getterów
-- przestrzegajmy prawa Demeter
-- unikanie „wraków pociągów”, czyli kodu postaci: a.getB().getC().getD().getZ().doSth();
-- unikać hybryd (trochę obiekt, trochę struktura danych)
-6. Obsługa błędów:
-- wyjątki zamiast kodów powrotu
-- NIE zwracamy null
-- NIE przekazujemy null
-- tworzenie komunikatów błędów z informacją o typie awarii i co miało się wykonać oraz przesłanie ich w wyjątku
-7. Granice:
-- separacja obcego kodu od naszego
-- testy „uczące” obcego kodu
-- wzorzec Adapter
-8. Testy jednostkowe:
-- kod testów jest tak samo ważny jak kod produkcyjny
-- czytelność testów
-- w testach nie jest tak istotna wydajność
-- jedna asercja na test – niekoniecznie
-- jedna koncepcja na test
-- testy powinny spełniać zasady F.I.R.S.T.
-  - Fast – szybkie
-  - Independent – niezależne
-  - Repeatable – powtarzalne
-  - Self-Validating – samo kontrolujące się
-  - Timely – o czasie
-9. Klasy:
-- organizacja klas (od góry):
-  - publiczne stałe statyczne
-  - prywatne zmienne statyczne
-  - prywatne zmienne instancyjne
-  - publiczne metody
-  - prywatne metody
