@@ -573,9 +573,20 @@ https://www.restapitutorial.com/httpstatuscodes.html
 - 4xx - błąd klienta
 - 5xx - błąd serwera
 #### Czym chararakteryzują się metody idempotentne? Które są idempotentne, a które nie?
-- Drugie i kolejne ich wywołanie z takimi samymi danymi nie zmienia stanu systemu. Są to: GET, HEAD, PUT, DELETE, OPTIONS
 #### Czym charakteryzują się metody bezpieczne
-- Nie zmieniają stanu systemu: np. GET, HEAD, OPTIONS
+| Method  | Safe | Idempotent | Cacheable | Allowed in HTML forms | Request has body | Response has body |
+|---------|------|------------|-----------|-----------------------|------------------|-------------------|
+| GET     | ✅    | ✅          | ✅         | ✅                     | ❌                | ✅                 |
+| HEAD    | ✅    | ✅          | ✅         | ❌                     | ❌                | ❌                 |
+| POST    | ❌    | ❌          | ✅*        | ✅                     | ✅                | ✅                 |
+| PUT     | ❌    | ✅          | ❌         | ❌                     | ✅                | ❌                 |
+| PATCH   | ❌    | ❌          | ❌         | ❌                     | ✅                | ✅                 |
+| DELETE  | ❌    | ✅          | ❌         | ❌                     | May               | May               |
+| OPTIONS | ✅    | ✅          | ❌         | ❌                     | ❌                | ✅                 |
+| TRACE   | ❌    | ✅          | ❌         | ❌                     | ❌                | ❌                 |
+| CONNECT | ❌    | ❌          | ❌         | ❌                     | ❌                | ✅                 |
+* - Only if freshness information is included
+
 #### Czym są Headery i do czego się je stosuje?
 - Zawierają metadane, np. info o stanie ssji (ciastka), cacheowalność, Content type, autentykacja, 
 #### Jakie znasz Headery? Podaj przykłady.
