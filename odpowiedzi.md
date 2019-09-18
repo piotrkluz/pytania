@@ -491,6 +491,9 @@ Napisz logikę / zamodeluj problem odpowiadające na pytanie kiedy liny się prz
 
 
 # ISTQB - Teoria testowania
+#### [ZADANIE] Proszę tutaj jest termometr zaokienny, zastanawiamy się czy zamawiać 1000000 sztuk. Jak byś go przetestował/a ?
+#### [ZADANIE] Przetestuj windę
+
 Syllabus: https://sjsi.org/ist-qb/do-pobrania/
 
 #### Pomyłka, defekt, awaria - czym się różnią? 
