@@ -1,9 +1,6 @@
 # Pytania na rozmowy kwalifikacyjne
 
-Zamieszczam tutaj pytania z którymi się spotkałem na rozmowach kwalifikacyjnych i na które odpowiedzi moim zdaniem warto znać. 
-
-## Lista pytań
-https://github.com/piotrkluz/pytania/blob/master/index.md
+Zamieszczam tutaj pytania i odpowiedzi z którymi się spotkałem na rozmowach kwalifikacyjnych i na które odpowiedzi moim zdaniem warto znać. 
 
 ## Odpowiedzi
 **UWAGA !** Odpowiedzi służą bardziej do przypomnienia materiału, niż nauki od podstaw.
