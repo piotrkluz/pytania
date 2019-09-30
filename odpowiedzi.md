@@ -675,6 +675,7 @@ Standard delegacji autoryzacji.
 #### Zasada działania GIT'a i czym różni się od SVN? 
 
 # Bash
+Podstawy tutaj: https://github.com/qarmin/PodstawowePoleceniaLinux/blob/master/README.md#podstawowe-polecenia-stosowane-w-systemie-gnulinux
 #### Jakie znasz skróty klawiszowe w IDE z którym pracujesz?
 #### Omów działanie komend pod linuxem: 
 - ls
